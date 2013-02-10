@@ -1,0 +1,5 @@
+link/config/fish/fish_history
+link/config/fish/fish_read_history
+link/config/fish/fishd.*
+
+link/root/.pentadactyl/info

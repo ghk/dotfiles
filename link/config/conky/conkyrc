@@ -1,0 +1,75 @@
+own_window yes
+own_window_class Conky
+own_window_type desktop
+own_window_transparent yes
+own_window_argb_visual yes
+own_window_argb_value 180
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+ 
+
+background yes
+
+# -- Conky settings -- #
+#background no
+update_interval 1
+ 
+cpu_avg_samples 2
+net_avg_samples 2
+ 
+override_utf8_locale yes
+ 
+double_buffer yes
+no_buffers yes
+ 
+text_buffer_size 2048
+imlib_cache_size 0
+ 
+# -- Window specifications -- #
+ 
+border_inner_margin 0
+border_outer_margin 0
+ 
+minimum_size 350 350
+maximum_width 1024
+ 
+alignment tr
+gap_x -20
+gap_y 20
+ 
+# -- Graphics settings -- #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+ 
+# -- Text settings -- #
+use_xft yes
+xftfont Terminus:size=8
+
+# Defining colors
+default_color FFFFFF
+# Shades of Gray
+color1 AAAAAA
+color2 268BD2
+color3 888888
+# Orange
+color4 cb4b16
+# Green
+color5 77B753
+ 
+# -- Lua Load -- #
+lua_load /home/ghk/.config/conky/clock_rings.lua
+lua_draw_hook_pre clock_rings
+lua_load /home/ghk/.config/conky/marks.lua
+lua_draw_hook_post main
+ 
+TEXT
+${voffset 260}
+
+${color2 }${font Consolas:size=14}${offset 70}${execi 1800 date +%^B | cut -c1}${execi 1800 date +%B | cut -c2-} ${time (%m)}
+
+${color1}${font Consolas:size=14}${execpi 600 DJS=`date +%_d`; cal -h | sed '1d' | sed s/"$DJS"/'${color4}'"$DJS"'${color1}'/ | sed 's/^/${offset 70}/' }$font
+
+${color1}${font Consolas:size=14}${execpi 900 python '/home/ghk/.local/ejos/__init__.py' trello}$font
+
+${color1}${font Consolas:size=14}${execpi 120 python '/home/ghk/.local/ejos/__init__.py' gmail}$font

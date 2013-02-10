@@ -1,0 +1,74 @@
+colorscheme solarized-dark
+set guioptions+=n
+set hintkeys=weioasdjkl
+
+hi -a Hint font-size: 10pt !important; 
+hi -a Hint font-weight: normal !important; 
+hi -a Hint font-family: "Helvetica LT" !important; 
+hi -a Hint text-transform: uppercase;
+hi -a Hint letter-spacing: 0.2em;
+
+" style for the tabs
+style -name tabs chrome://* <<EOM
+/* remove new tab button from the tab bar */
+#TabsToolbar #new-tab-button,
+#TabsToolbar .tabs-newtab-button {
+        display: none; !important
+}
+#TabsToolbar {
+}
+#TabsToolbar toolbarbutton {
+    height: 14px !important;
+    width: 14px !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    background-color: #1c1c1c !important;
+}
+#TabsToolbar toolbarbutton#appmenu-toolbar-button {
+    width: 36px !important;
+    height: 14px !important;
+    background-color: #1c1c1c !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    margin-left: -20px !important;
+}
+/* remove tab selection menu */
+#TabsToolbar toolbar-button.tabs-alltabs-button {
+    display: none; !important
+    line-height: 14px !important;
+    margin-right: 4px !important;
+    margin-left: 4px !important;
+}
+#tabbrowser-tabs {
+    color: #fdf6e3 !important;
+    background-color: #1c1c1c !important;
+}
+
+/* make tabs flat and compact */
+#tabbrowser-tabs .tabbrowser-tab {
+    color: #aaaaaa !important;
+    border: none !important;
+    border-left: none !important;
+    padding: 1px 5px !important;
+    background-color: #1c1c1c !important;
+    background-image: none !important;
+    border-radius: 0 0 0 0 !important;
+    font-family: Consolas, monospace !important;
+    font-size: 12px !important;
+    line-height: 14px !important;
+    min-height: 20px !important;
+    height: 20px !important;
+}
+#tabbrowser-tabs .tabbrowser-tab[selected=false] {
+    background-color: #1c1c1c !important;
+    color: #aaaaaa !important;
+}
+#tabbrowser-tabs .tabbrowser-tab[selected=true] {
+    font-weight: normal !important;
+    color: #ffffd7 !important;
+    background-color: #268bd2 !important;
+}
+EOM
+
+
+command proxy -nargs=1 :set! network.proxy.type=<args>

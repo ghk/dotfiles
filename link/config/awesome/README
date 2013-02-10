@@ -1,0 +1,26 @@
+Fetch that by using the command ''git clone http://github.com/dmj/misc.git''. You'll have to move into a couple of directories and then copy the 2 files called mail-simple.lua and imap.lua to your ~/.config/awesome/
+
+Make sure to set your username and password as directed in mail-simple.lua:
+
+  imap_user = "myimaploginname@myhost.com"
+  imap_padd = "88693jkjfdkf"
+
+Also change the host name and other relevant details a few lines above- they don't need to be changed for gmail users though as it's set to gmail by default.
+
+In rc.lua, at the top, I added under require("debian.menu") a new line:
+
+  require("debian.menu")
+  require("mail-simple") -- new line
+
+Scroll down a bit to:
+
+
+        -- mylayoutbox[s],
+        mytextclock,
+        s == 1 and mysystray or nil,
+        w_imap,  -- ADD THIS NEW LINE HERE
+        mytasklist[s],
+        layout = awful.widget.layout.horizontal.rightleft
+
+If you log out it should now work.
+

@@ -1,0 +1,24 @@
+{
+    "left": {
+        "active_tab": 0, 
+        "tabs": [
+            {
+                "class": "FileList", 
+                "path": "/home/ghk/Downloads", 
+                "sort_ascending": true, 
+                "sort_column": 0
+            }
+        ]
+    }, 
+    "right": {
+        "active_tab": 0, 
+        "tabs": [
+            {
+                "class": "FileList", 
+                "path": "/home/ghk", 
+                "sort_ascending": true, 
+                "sort_column": 0
+            }
+        ]
+    }
+}

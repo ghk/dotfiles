@@ -1,0 +1,71 @@
+{
+    "active_notebook": 0, 
+    "always_show_tabs": false, 
+    "button_relief": false, 
+    "confirmations": {
+        "delete_items": true
+    }, 
+    "editor": {
+        "application": "GVim", 
+        "default_editor": "gvim -f %F", 
+        "external_command": "pluma %U", 
+        "terminal_command": false, 
+        "type": 0
+    }, 
+    "expand_tabs": 0, 
+    "focus_new_tab": true, 
+    "history_file": ".bash_history", 
+    "item_list": {
+        "case_sensitive_sort": true, 
+        "grid_lines": 0, 
+        "headers_visible": true, 
+        "mode_format": 1, 
+        "right_click_select": false, 
+        "row_hinting": false, 
+        "search_modifier": "000", 
+        "selection_color": "#ffff5e5e0000", 
+        "show_hidden": false, 
+        "single_click_navigation": false, 
+        "time_format": "%H:%M %d-%m-%y"
+    }, 
+    "last_version": 52, 
+    "media_preview": true, 
+    "operations": {
+        "automount_insert": false, 
+        "automount_start": false, 
+        "hide_on_minimize": false, 
+        "merge_in_silent": true, 
+        "overwrite_in_silent": true, 
+        "reserve_size": false, 
+        "set_mode": true, 
+        "set_owner": false, 
+        "set_timestamp": true, 
+        "silent": false, 
+        "trash_files": true
+    }, 
+    "plugins": [
+        "archiver", 
+        "file_list", 
+        "system_terminal"
+    ], 
+    "show_command_bar": false, 
+    "show_command_entry": true, 
+    "show_notifications": true, 
+    "show_status_bar": 0, 
+    "show_toolbar": false, 
+    "size_format": 1, 
+    "superuser_notification": true, 
+    "tab_button_icons": true, 
+    "tab_close_button": true, 
+    "terminal": {
+        "allow_bold": true, 
+        "command": "terminator {0}", 
+        "cursor_shape": 0, 
+        "font": "Monospace 12", 
+        "mouse_autohide": false, 
+        "show_scrollbars": true, 
+        "type": 1, 
+        "use_system_font": true
+    }, 
+    "ubuntu_coloring": false
+}

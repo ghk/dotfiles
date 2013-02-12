@@ -1,7 +1,7 @@
 . ~/.config/fish/vi-mode.fish
 
 set fish_greeting
-set PATH /home/ghk/.local/bin /opt/vagrant/bin $PATH
+set PATH /home/ghk/.local/bin /opt/vagrant/bin /usr/local/bin $PATH
 
 set TERM xterm-256color
 
@@ -10,5 +10,3 @@ set -Ux LS_COLORS 'no=00;38;5;244:rs=0:di=00;38;5;33:ln=01;38;5;37:mh=00:pi=48;5
 function fish_user_key_bindings
     vi_mode_insert
 end
-
-

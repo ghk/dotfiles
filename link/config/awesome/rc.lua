@@ -12,6 +12,14 @@ require("ejos.tile")
 
 -- fns
 
+function report_focus(c)
+    os.execute("qdbus ejos.focused / ejos.focused.focus "..client.focus.pid.." &")
+end
+
+function next_audio(c)
+    os.execute("qdbus ejos.focused / ejos.focused.focus "..client.focus.pid.." &")
+end
+
 --{{---| Java GUI's fix |---------------------------------------------------------------------------
 
 awful.util.spawn_with_shell("wmname LG3D")
@@ -644,16 +652,16 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey },            "b",        function () awful.util.spawn_with_shell("~/Tools/rubymine.run") end),
     awful.key({ modkey },            "`",        function () awful.util.spawn_with_shell("xwinmosaic") end),
     awful.key({ modkey, "Control" }, "m",        function () awful.util.spawn_with_shell(musicplr) end),
+    awful.key({ },"XF86AudioPrev",              function () awful.util.spawn_with_shell("qdbus org.bansheeproject.Banshee /org/bansheeproject/Banshee/PlaybackController org.bansheeproject.Banshee.PlaybackController.Previous false") end),
+    awful.key({ },"XF86AudioNext",              function () awful.util.spawn_with_shell("qdbus org.bansheeproject.Banshee /org/bansheeproject/Banshee/PlaybackController org.bansheeproject.Banshee.PlaybackController.Next false") end),
+    awful.key({ },            "XF86AudioPlay",        function () awful.util.spawn_with_shell("qdbus org.bansheeproject.Banshee /org/bansheeproject/Banshee/PlayerEngine org.bansheeproject.Banshee.PlayerEngine.TogglePlaying") end),
     awful.key({ }, "XF86Calculator",             function () awful.util.spawn_with_shell("gcalctool") end),
     awful.key({ }, "XF86Sleep",                  function () awful.util.spawn_with_shell("sudo pm-hibernate") end),
     awful.key({ }, "XF86AudioPlay",              function () awful.util.spawn_with_shell("ncmpcpp toggle") end),
     awful.key({ }, "XF86AudioStop",              function () awful.util.spawn_with_shell("ncmpcpp stop") end),
-    awful.key({ }, "XF86AudioPrev",              function () awful.util.spawn_with_shell("ncmpcpp prev") end),
-    awful.key({ }, "XF86AudioNext",              function () awful.util.spawn_with_shell("ncmpcpp next") end),
     awful.key({ }, "XF86AudioLowerVolume",       function () couth.notifier:notify(couth.alsa:setVolume('Master','3dB-')) end),
     awful.key({ }, "XF86AudioRaiseVolume",       function () couth.notifier:notify(couth.alsa:setVolume('Master','3dB+')) end),
     awful.key({ }, "XF86AudioMute",              function () couth.notifier:notify(couth.alsa:setVolume('Master','toggle')) end)
-
 )
 
 clientkeys = awful.util.table.join(
@@ -772,12 +780,13 @@ client.add_signal("manage",
     function (c, startup)
     -- Add a titlebar
     -- awful.titlebar.add(c, { modkey = modkey })
-    c:add_signal("mouse::enter", function(c) if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-           and awful.client.focus.filter(c) then client.focus = c end 
-    end)
+    --c:add_signal("mouse::enter", function(c) if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
+     --      and awful.client.focus.filter(c) then client.focus = c end 
+    --end)
 if not startup then if not c.size_hints.user_position and not c.size_hints.program_position then
     awful.placement.no_overlap(c) awful.placement.no_offscreen(c) end end end)
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+client.add_signal("focus", report_focus)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
 --{{---| run_once |---------------------------------------------------------------------------------
@@ -801,6 +810,7 @@ end
 --{{--| Autostart |---------------------------------------------------------------------------------
 
 run_once("compton")
+run_once("focused")
 run_once_differ("conky", 'conky -c "/home/ghk/.config/conky/conkyrc"')
 --run_once_differ("urxvtd", "urxvtd -o -f -q")
 

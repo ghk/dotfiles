@@ -1,6 +1,7 @@
 {
     "main": {
-        "geometry": "1118x858+0+40", 
+        "geometry": "1278x858+0+40", 
+        "handle_position": 403, 
         "hide_on_close": false, 
         "state": 0
     }

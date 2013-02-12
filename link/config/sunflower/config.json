@@ -1,5 +1,5 @@
 {
-    "active_notebook": 0, 
+    "active_notebook": 1, 
     "always_show_tabs": false, 
     "button_relief": false, 
     "confirmations": {
@@ -24,6 +24,7 @@
         "row_hinting": false, 
         "search_modifier": "000", 
         "selection_color": "#ffff5e5e0000", 
+        "selection_indicator": "\u2731", 
         "show_hidden": false, 
         "single_click_navigation": false, 
         "time_format": "%H:%M %d-%m-%y"
@@ -44,12 +45,13 @@
         "trash_files": true
     }, 
     "plugins": [
-        "archiver", 
+        "ejos", 
+        "vi_file_list", 
         "file_list", 
         "system_terminal"
     ], 
     "show_command_bar": false, 
-    "show_command_entry": true, 
+    "show_command_entry": false, 
     "show_notifications": true, 
     "show_status_bar": 0, 
     "show_toolbar": false, 

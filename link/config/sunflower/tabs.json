@@ -3,8 +3,8 @@
         "active_tab": 0, 
         "tabs": [
             {
-                "class": "FileList", 
-                "path": "/home/ghk/Downloads", 
+                "class": "ViFileList", 
+                "path": "/home/ghk", 
                 "sort_ascending": true, 
                 "sort_column": 0
             }
@@ -14,8 +14,8 @@
         "active_tab": 0, 
         "tabs": [
             {
-                "class": "FileList", 
-                "path": "/home/ghk", 
+                "class": "ViFileList", 
+                "path": "/home/ghk/Dropbox/microvacplus/kaskita/UI design", 
                 "sort_ascending": true, 
                 "sort_column": 0
             }

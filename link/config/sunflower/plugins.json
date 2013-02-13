@@ -17,14 +17,12 @@
         "columns": [
             "name", 
             "extension", 
-            "size", 
-            "mode", 
-            "date"
+            "size"
         ], 
-        "size_date": 875, 
-        "size_extension": 50, 
+        "size_date": 1195, 
+        "size_extension": 30, 
         "size_mode": 50, 
-        "size_name": 200, 
-        "size_size": 70
+        "size_name": 250, 
+        "size_size": 981
     }
 }

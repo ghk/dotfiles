@@ -34,7 +34,7 @@ maximum_width 1024
  
 alignment tr
 gap_x -20
-gap_y 20
+gap_y 40
  
 # -- Graphics settings -- #
 draw_shades no

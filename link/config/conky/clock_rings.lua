@@ -34,7 +34,7 @@ settings_table = {
 		-- "fg_alpha" is the alpha value of the indicator part of the ring.
 		fg_alpha=0.5,
 		-- "x" and "y" are the x and y coordinates of the centre of the ring, relative to the top left corner of the Conky window.
-		x=175, y=175,
+		x=100, y=100,
 		-- "radius" is the radius of the ring.
 		radius=50,
 		-- "thickness" is the thickness of the ring, centred around the radius.
@@ -52,7 +52,7 @@ settings_table = {
 		bg_alpha=0.1,
 		fg_colour=0x000000,
 		fg_alpha=0.5,
-		x=175, y=175,
+		x=175, y=150,
 		radius=56,
 		thickness=5,
 		start_angle=0,
@@ -66,7 +66,7 @@ settings_table = {
 		bg_alpha=0.1,
 		fg_colour=0x000000,
 		fg_alpha=0.5,
-		x=175, y=175,
+		x=175, y=125,
 		radius=62,
 		thickness=5,
 		start_angle=0,
@@ -80,7 +80,7 @@ settings_table = {
 		bg_alpha=0.0,
 		fg_colour=0x000000,
 		fg_alpha=0.1,
-		x=175, y=175,
+		x=175, y=125,
 		radius=68,
 		thickness=5,
 		start_angle=0,
@@ -96,7 +96,7 @@ clock_r=125
 -- "clock_x" and "clock_y" are the coordinates of the centre of the clock, in pixels, from the top left of the Conky window.
 
 clock_x=175
-clock_y=175
+clock_y=150
 
 -- Colour & alpha of the clock hands
 

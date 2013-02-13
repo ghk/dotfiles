@@ -103,11 +103,11 @@ tags = {
     layouts = { layouts[2], layouts[2], layouts[5], layouts[5], layouts[3],
     layouts[3], layouts[2], layouts[1], layouts[1], layouts[1] }
 }   
+
 for s = 1, screen.count() do
     tags[s] = awful.tag(tags.names, s, tags.layouts)
     for i=1, #tags.names do
         if(awful.layout.getname(tags.layouts[i])) == "desktile" then
-            awful.tag.viewonly(tags[s][i])
             awful.tag.incmwfact(0.20, tags[s][i])
         end
     end
@@ -611,7 +611,6 @@ globalkeys = awful.util.table.join(
     --{{---| Terminals, shells und multiplexors |---------------------------------------------------------\-\\
     --
     awful.key({ modkey },            "a",        function () awful.util.spawn_with_shell(configuration) end), --
-    awful.key({        },            "Menu",     function () awful.util.spawn(ttmux) end),                    --
     awful.key({ modkey,           }, "Return",   function () 
               if awful.layout.getname(awful.layout.get()) == "desktile" then
                   awful.util.spawn(terminal.." -name deskrxvt") 

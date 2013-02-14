@@ -64,7 +64,7 @@ lua_load /home/ghk/.config/conky/marks.lua
 lua_draw_hook_post main
  
 TEXT
-${voffset 260}
+${voffset 235}
 
 ${color2 }${font Consolas:size=14}${offset 70}${execi 1800 date +%^B | cut -c1}${execi 1800 date +%B | cut -c2-} ${time (%m)}
 

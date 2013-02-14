@@ -4,3 +4,4 @@ link/config/fish/fishd.*
 link/config/fish/.fuse
 
 link/root/.pentadactyl/info
+link/root/.vim/.netrwhist

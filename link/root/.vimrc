@@ -8,15 +8,16 @@ set clipboard=unnamedplus
 
 filetype plugin indent on
 
-let g:solarized_termcolors=256
+let g:solarized_termtrans=1
+let g:solarized_contrast="high"
 let &t_Co=256
 
 set title
 syntax on
+set background=dark
+colorscheme solarized
 
 if has("gui_running")
-    colorscheme solarized
-    set background=dark
     set guifont=Consolas\ 10
     set guioptions-=m
     set guioptions-=T

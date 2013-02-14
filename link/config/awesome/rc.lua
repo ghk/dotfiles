@@ -16,7 +16,7 @@ function report_focus(c)
     os.execute("qdbus ejos.focused / ejos.focused.focus "..client.focus.pid.." &")
 end
 
-function next_audio(c)
+function get_focused_cwd()
     os.execute("qdbus ejos.focused / ejos.focused.focus "..client.focus.pid.." &")
 end
 
@@ -99,7 +99,7 @@ naughty.config.presets.critical.opacity    = 0.9
 --{{---| Tags |-------------------------------------------------------------------------------------
 
 tags = {
-    names  = { "1:Desk", "2:Desk", "3:Term", "4:Term", "5:Dev", "6:Dev", "7:Mail", "8:IM", "9:Media" },
+    names  = { "Desk 1", "2", "Term 3", "4", "Dev 5", "6", "Mail 7", "IM 8", "Media 9" },
     layouts = { layouts[2], layouts[2], layouts[5], layouts[5], layouts[3],
     layouts[3], layouts[2], layouts[1], layouts[1], layouts[1] }
 }   
@@ -258,7 +258,7 @@ mymainmenu = awful.menu(
 })
 
 mylauncher = awful.widget.launcher({ image = image(beautiful.menu_icon), menu = mymainmenu })
-
+awful.widget.layout.margins[mylauncher] = { top = 0}
 --{{---| Wibox |------------------------------------------------------------------------------------
 
 mysystray = widget({ type = "systray", bg_normal="#00FF0000" })
@@ -306,25 +306,6 @@ awful.button({ }, 5, function ()
              if client.focus then client.focus:raise() end
          end))
 
-
-
--- {{{ Date and time
-dateicon = widget({ type = "imagebox" })
-dateicon.image = image(beautiful.widget_cal)
--- Initialize widget
-datewidget = widget({ type = "textbox" })
--- Register widget
-vicious.register(datewidget, vicious.widgets.date, "%R", 61)
--- Register buttons
-datewidget:buttons(awful.util.table.join(
-    awful.button({ }, 1, function () exec("pylendar.py") end)
-    ))
--- }}}
-
--- binaryclock.widget:buttons(awful.util.table.join(
-    --   awful.button({ }, 1, function () 
-                      --   end)
--- ))
 
 
 for s = 1, screen.count() do
@@ -393,7 +374,7 @@ for s = 1, screen.count() do
     --{{---| MEM widget |-------------------------------------------------------------------------------
 
     memwidget = widget({ type = "textbox" })
-    vicious.register(memwidget, vicious.widgets.mem, '<span background="#1c1c1c" font="Consolas 12"> <span font="Consolas 9" background="#1c1c1c">$2MB </span></span>', 13)
+    vicious.register(memwidget, vicious.widgets.mem, '<span background="#313131" font="Consolas 12"> <span font="Consolas 9" background="#313131">$2MB </span></span>', 13)
     memicon = widget ({type = "imagebox" })
     memicon.image = image(beautiful.widget_mem)
 
@@ -457,7 +438,8 @@ for s = 1, screen.count() do
 
 
     --{{---| Calendar widget |-------------------------------------------------------------------------- 
-    my_cal = awful.widget.textclock({ align = "right"}, " %A, %d %B %Y, %H:%M:%S ", 1)
+    my_cal = awful.widget.textclock({ align = "right"}, '<span font="Consolas 12"><span font="Consolas 9">%a, %d %b %Y,%H:%M:%S </span></span>', 3)
+    awful.widget.layout.margins[my_cal] = { top = 2}
     my_cal.bg = "#313131"
 
     -- Calendar widget to attach to the textclock
@@ -512,14 +494,14 @@ for s = 1, screen.count() do
             layout = awful.widget.layout.horizontal.leftright 
         },
         -- top row right
-        netwidget,
-        neticon,
+        my_cal,
         arr9,
         batwidget,
         baticon,
         arr0, 
-        fswidget,
         udisks_glue.widget,
+        memwidget,
+        memicon,
         arr9,
         sensors,
         tempicon,
@@ -527,39 +509,12 @@ for s = 1, screen.count() do
         cpuwidget,
         cpuicon,
         arr9,
-        memwidget,
-        memicon,
-        arr0,
-        my_cal,
-        arr9,
-        spr,
-        layout = awful.widget.layout.horizontal.rightleft 
-    }
-    mytopwibox[s] = awful.wibox({ position = "top", screen = s, height = "16" })
-    awful.screen.padding(screen[s],{top = 24})
-    mytopwibox[s].x=0
-    mytopwibox[s].y=20 
-
-
-    mytopwibox[s].widgets = {
-        sprd2,
-        mylayoutbox[s],
-        sprd,
-        arr9,
-        launcher_icons[1],
-        arr0,
-        launcher_icons[2],
-        arr9,
-        launcher_icons[3],
-        arr0,
-        launcher_icons[4],
-        arr9,
         s == 1 and mysystray,
-        spr,
         spr,
         mytasklist[s], 
         layout = awful.widget.layout.horizontal.rightleft 
-    } 
+    }
+    awful.screen.padding(screen[s],{top = 4})
 
 end
 
@@ -791,11 +746,11 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 --{{---| run_once |---------------------------------------------------------------------------------
 
 function run_once(prg)
-    awful.util.spawn_with_shell("pgrep -x " .. prg .. "; or " .. prg .. "") 
+    awful.util.spawn_with_shell("pgrep -x " .. prg .. "; or " .. prg .. " &") 
 end
 
 function run_once_differ(search, prg)
-    awful.util.spawn_with_shell("pgrep -x " .. search .. "; or " .. prg .. "") 
+    awful.util.spawn_with_shell("pgrep -x " .. search .. "; or " .. prg .. " &") 
 end
 
 --{{---| run_once with args |-----------------------------------------------------------------------

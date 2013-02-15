@@ -99,9 +99,9 @@ naughty.config.presets.critical.opacity    = 0.9
 --{{---| Tags |-------------------------------------------------------------------------------------
 
 tags = {
-    names  = { "Desk 1", "2", "Term 3", "4", "Dev 5", "6", "Mail 7", "IM 8", "Media 9" },
-    layouts = { layouts[2], layouts[2], layouts[5], layouts[5], layouts[3],
-    layouts[3], layouts[2], layouts[1], layouts[1], layouts[1] }
+    names  = { "1:Desk", "2:Term", "3:Dev", "4:Mail", "5:IM", "6:Media", "7", "8", "9" },
+    layouts = { layouts[2], layouts[5], layouts[3],
+    layouts[2], layouts[1], layouts[1], layouts[1], layouts[3], layouts[3], layouts[3]},
 }   
 
 for s = 1, screen.count() do
@@ -494,6 +494,7 @@ for s = 1, screen.count() do
             layout = awful.widget.layout.horizontal.leftright 
         },
         -- top row right
+        mylayoutbox[s],
         my_cal,
         arr9,
         batwidget,
@@ -542,16 +543,38 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
     awful.key({ }, "Print", function () awful.util.spawn("scrot -e 'mv $f ~/screenshots/ 2>/dev/null'") end),
+
     awful.key({ modkey,           }, "j",
               function ()
-                  awful.client.focus.byidx(-1)
+                  awful.client.focus.bydirection("down")
                   if client.focus then client.focus:raise() end
               end),
     awful.key({ modkey,           }, "k",
               function ()
+                  awful.client.focus.bydirection("up")
+                  if client.focus then client.focus:raise() end
+              end),
+    awful.key({ modkey,           }, "h",
+              function ()
+                  awful.client.focus.bydirection("left")
+                  if client.focus then client.focus:raise() end
+              end),
+    awful.key({ modkey,           }, "l",
+              function ()
+                  awful.client.focus.bydirection("right")
+                  if client.focus then client.focus:raise() end
+              end),
+    awful.key({ modkey,           }, "o",
+              function ()
                   awful.client.focus.byidx(1)
                   if client.focus then client.focus:raise() end
               end),
+    awful.key({ modkey,           }, "i",
+              function ()
+                  awful.client.focus.byidx(-1)
+                  if client.focus then client.focus:raise() end
+              end),
+
     awful.key({ modkey,           }, "w", function () mymainmenu:show({keygrabber=true}) end),
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
     awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end),
@@ -582,8 +605,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift",     "Control"}, "r", awesome.quit),
     awful.key({ modkey, "Control" }, "n",        awful.client.restore),
     awful.key({ modkey },            "r",        function () mypromptbox[mouse.screen]:run() end),
-    awful.key({ modkey,           }, "l",        function () awful.tag.incmwfact( 0.05)    end),
-    awful.key({ modkey,           }, "h",        function () awful.tag.incmwfact(-0.05)    end),
+    awful.key({ modkey,           }, ".",        function () awful.tag.incmwfact( 0.05)    end),
+    awful.key({ modkey,           }, ",",        function () awful.tag.incmwfact(-0.05)    end),
     awful.key({ modkey, "Shift"   }, "h",        function () awful.tag.incnmaster( 1)      end),
     awful.key({ modkey, "Shift"   }, "l",        function () awful.tag.incnmaster(-1)      end),
     awful.key({ modkey, "Control" }, "h",        function () awful.tag.incncol( 1)         end),
@@ -602,7 +625,6 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"},    "Print",    function () awful.util.spawn_with_shell("screengrab --active") end),
     awful.key({ modkey },            "'",        function () awful.util.spawn_with_shell("leafpad") end),
     awful.key({ modkey },            "\\",       function () awful.util.spawn_with_shell("sublime_text") end),
-    awful.key({ modkey },            "i",        function () awful.util.spawn_with_shell(iptraf) end),
     awful.key({ modkey },            "b",        function () awful.util.spawn_with_shell("~/Tools/rubymine.run") end),
     awful.key({ modkey },            "`",        function () awful.util.spawn_with_shell("xwinmosaic") end),
     awful.key({ modkey, "Control" }, "m",        function () awful.util.spawn_with_shell(musicplr) end),
@@ -689,28 +711,34 @@ awful.rules.rules = {
     },
     { 
         rule = { class = "Thunderbird" },
-        properties = { tag=tags[1][7] } 
+        properties = { tag=tags[1][4] } 
     },
     { 
         rule = { class = "Pidgin" },
-        properties = { tag=tags[1][8] } 
+        properties = { tag=tags[1][5] } 
     },
     { 
         rule = { class = "Skype" },
-        properties = { tag=tags[1][8] } 
+        properties = { tag=tags[1][5] } 
     },
     { 
         rule = { class = "banshee" },
-        properties = { tag=tags[1][9] } 
+        properties = { tag=tags[1][6] } 
     },
     { 
         rule = { instance = "trello.com" },
-        properties = { tag=tags[1][7] },
+        properties = { tag=tags[1][4] },
         callback = awful.client.setslave,
     },
     { 
         rule = { instance = "deskrxvt"},
         callback = awful.client.setslave,
+    },
+    { 
+        rule = { class = "URxvt"},
+        properties = { 
+            size_hints_honor = true,
+        },
     },
     { 
         rule = { class = "Firefox", role="Manager" },

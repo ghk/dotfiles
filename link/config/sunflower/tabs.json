@@ -15,7 +15,7 @@
         "tabs": [
             {
                 "class": "ViFileList", 
-                "path": "/home/ghk/Dropbox", 
+                "path": "/home/ghk/Workspace/php/three_editions/magento/js/extjs/css", 
                 "sort_ascending": true, 
                 "sort_column": 0
             }

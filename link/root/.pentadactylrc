@@ -8,6 +8,8 @@ hi -a Hint font-family: "Helvetica LT" !important;
 hi -a Hint text-transform: uppercase;
 hi -a Hint letter-spacing: 0.2em;
 
+js editor.defaultRegister="+"
+
 " style for the tabs
 style -name tabs chrome://* <<EOM
 /* remove new tab button from the tab bar */

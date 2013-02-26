@@ -1,1 +1,13 @@
-{}
+{
+    "smb": [
+        {
+            "directory": "", 
+            "domain": "", 
+            "name": "hydrogen-misc", 
+            "requires_login": false, 
+            "server": "192.168.0.130", 
+            "share": "Misc", 
+            "username": ""
+        }
+    ]
+}

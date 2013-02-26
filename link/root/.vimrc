@@ -1,12 +1,40 @@
+" Vundle --------
+set nocompatible
+filetype off
+
+set shell=/bin/bash
+set rtp+=~/.vim/bundle/vundle
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'majutsushi/tagbar'
+Bundle 'kien/ctrlp.vim'
+Bundle 'SirVer/ultisnips'
+Bundle 'tpope/vim-fugitive'
+Bundle 'scrooloose/syntastic'
+Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'rosenfeld/conque-term'
+
+filetype plugin indent on
+
+" Indentation ------------
+
 set number
 set expandtab
 set tabstop=4
 set shiftwidth=4
 set tabstop=4
 set autoindent
+
+" Misc --------------
+
 set clipboard=unnamedplus
 
-filetype plugin indent on
+"column limit hint
+let &colorcolumn="80,".join(range(120,999),",")
+
 
 let g:solarized_termtrans=1
 let g:solarized_contrast="high"
@@ -24,12 +52,14 @@ if has("gui_running")
 endif
 
 " Use ctrl-[hjkl] to select the active split!
-nmap <silent> <c-j> :wincmd j<CR>
-nmap <silent> <c-k> :wincmd k<CR>
-nmap <silent> <c-h> :wincmd h<CR>
-nmap <silent> <c-l> :wincmd l<CR>
+nmap <silent> <c-h> :call g:EjosWinMove("h")<CR>
+nmap <silent> <c-j> :call g:EjosWinMove("j")<CR>
+nmap <silent> <c-k> :call g:EjosWinMove("k")<CR>
+nmap <silent> <c-l> :call g:EjosWinMove("l")<CR>
 
-map <C-n> :NERDTreeToggle<CR>
+map <silent> <F1> :call g:EjosToggleTree()<CR>
+map <silent> <F2> :call g:EjosToggleTagbar()<CR>
+map <silent> <C-\> :silent call g:EjosSetMaster()<CR>
 
 function SmoothScroll(up)
     if a:up
@@ -48,11 +78,18 @@ function SmoothScroll(up)
     endwhile
 endfunction
 
-nnoremap <C-U> :call SmoothScroll(1)<Enter>
-nnoremap <C-D> :call SmoothScroll(0)<Enter>
+nnoremap <silent> <C-U> :call SmoothScroll(1)<Enter>
+nnoremap <silent> <C-D> :call SmoothScroll(0)<Enter>
+map <silent> <F10> :call SmoothScroll(0)<Enter>
+map <silent> <F11> :call SmoothScroll(1)<Enter>
 inoremap <C-U> <Esc>:call SmoothScroll(1)<Enter>i
 inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
 
 set mouse=n
-map <ScrollWheelUp> <C-Y>
-map <ScrollWheelDown> <C-E>
+map <ScrollWheelUp> 2<C-Y>
+map <ScrollWheelDown> 2<C-E>
+
+" muahahah
+nmap <Space> :
+
+autocmd VimResized * call g:EjosResize() 

@@ -1,2 +1,11 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =0
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/home/ghk/Workspace/dotfiles/link/root/.vim/syntax'
+let g:netrw_dirhist_2='/home/ghk/Workspace/php/three_editions/magento/app/code/core/Mage/AmazonS3/etc'
+let g:netrw_dirhist_3='/home/ghk/Workspace/php/three_editions/magento/app/code/core/Mage/AmazonS3'
+let g:netrw_dirhist_4='/home/ghk/Workspace/php/three_editions/magento/app/code/core/Mage/AmazonS3/etc'
+let g:netrw_dirhist_5='/home/ghk/Workspace/php/three_editions/magento/app/code/core/Mage/AmazonS3'
+let g:netrw_dirhist_6='/home/ghk/Workspace/php/three_editions/magento/app/code/core/Mage/AmazonS3/Helper'
+let g:netrw_dirhist_7='/home/ghk/Workspace/php/three_editions/magento/skin/frontend/three_editions/default/css'
+let g:netrw_dirhist_8='/home/ghk/Workspace/php/three_editions/magento/skin/frontend/three_editions'
+let g:netrw_dirhist_9='/home/ghk/Workspace/php/three_editions/magento/app/design/frontend/base/default/template/catalog'

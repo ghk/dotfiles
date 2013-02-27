@@ -1,5 +1,5 @@
-colorscheme solarized-dark
 set guioptions+=n
+colorscheme solarized-dark
 set hintkeys=weioasdjkl
 
 hi -a Hint font-size: 10pt !important; 
@@ -72,5 +72,16 @@ style -name tabs chrome://* <<EOM
 }
 EOM
 
+javascript <<EOF
+toggleKeys = function (){
+    return "lalala";
+}
+EOF
+
 
 command proxy -nargs=1 :set! network.proxy.type=<args>
+nmap <Space> :
+nmap <F10> <C-d>
+nmap <F11> <C-u>
+nmap <F9> f
+nmap e :echo 

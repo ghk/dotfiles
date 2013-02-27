@@ -1,25 +1,3 @@
-call NERDTreeAddKeyMap({
-       \ 'key': '<c-j>',
-       \ 'callback': 'NERDTreeCJ',
-       \ 'quickhelpText': 'cww scroll',
-       \ 'scope': 'all' })
-
-function! NERDTreeCJ()
-    wincmd j
-    "call g:EjosWinMove("k")
-endfunction
-
-call NERDTreeAddKeyMap({
-       \ 'key': '<c-k>',
-       \ 'callback': 'NERDTreeCK',
-       \ 'quickhelpText': 'cww scroll',
-       \ 'scope': 'all' })
-
-function! NERDTreeCK()
-    wincmd k
-    "call g:EjosWinMove("k")
-endfunction
-
 function! s:exec(cmd)
     let old_ei = &ei
     set ei=all
@@ -33,7 +11,11 @@ function! s:getWinNum(name)
     elseif a:name == "tag"
         return bufwinnr('__Tagbar__')
     elseif a:name == "master"
-        return s:isWinOpen("tree") ? 2 : 1
+        if s:stacked && s:isWinOpen("tag")
+            return s:isWinOpen("tree") ? 3 : 2
+        else 
+            return s:isWinOpen("tree") ? 2 : 1
+        endif
     endif
     return -1
 endfunction
@@ -57,26 +39,55 @@ function! s:hasSlave()
     return totalWin != 1
 endfunction
 
+function! s:setSize(treeSize, masterSize, tagSize, slaveSize)
+    if s:isWinOpen("tree") 
+        call s:putCursorInWin("tree")
+        exec("silent vertical resize ". a:treeSize)
+    endif
+
+    call s:putCursorInWin("master")
+    exec("silent vertical resize ". a:masterSize)
+
+    if s:isWinOpen("tag") 
+        call s:putCursorInWin("tag")
+        exec("silent vertical resize ". a:tagSize)
+    endif
+
+    if s:hasSlave() 
+        call s:exec("wincmd b")
+        exec("silent vertical resize ". a:slaveSize)
+    endif
+    
+    if s:isWinOpen("tree") 
+        call s:putCursorInWin("tree")
+        exec("silent vertical resize ". a:treeSize)
+    endif
+endfunction
+
 " when stacked:
 " tag
 " tree
 " windows (first is master)
+let s:stacked = 0
 
 function! s:stackAll()
     "stack up master win
-    call s:putCursorInWin("tree")
-    call s:exec("wincmd l")
+    call s:putCursorInWin("master")
     call s:exec('wincmd K')
 
     "stack up tree win
-    call s:putCursorInWin("tree")
-    call s:exec('wincmd K')
+    if s:isWinOpen("tree")
+        call s:putCursorInWin("tree")
+        call s:exec('wincmd K')
+    endif
 
     if s:isWinOpen("tag")
         "stack up tag win
         call s:putCursorInWin("tag")
         call s:exec('wincmd K')
     endif
+
+    let s:stacked = 1
 
 endfunction
 
@@ -88,114 +99,91 @@ function! s:restoreAll()
     endif
 
     "restore master
-    call s:putCursorInWin("tree")
-    call s:exec("wincmd j")
+    call s:putCursorInWin("master")
     call s:exec('wincmd H')
 
     "restore tree
-    call s:putCursorInWin("tree")
-    call s:exec('wincmd H')
+    if s:isWinOpen("tree")
+        call s:putCursorInWin("tree")
+        call s:exec('wincmd H')
+    endif
+
+    let s:stacked = 0
 endfunction
 
-let s:tree_up_dir_line = '.. (up a dir)'
-
-call NERDTreeAddKeyMap({
-       \ 'key': 'o',
-       \ 'callback': 'NERDTreeOpenMaster',
-       \ 'quickhelpText': 'cww scroll',
-       \ 'scope': 'FileNode' })
-
-function! NERDTreeOpenMaster(treenode)
-    if getline(".") ==# s:tree_up_dir_line
-        call g:NERDTreeUpDir(0)
-        return
-    endif
-
-    let treenode = a:treenode
-    if treenode == {} || isdirectory(treenode.path.str())
-        call treenode.activate(0)
-        return
-    endif
-
-    let winnr = bufwinnr('^' . treenode.path.str() . '$')
+function! s:openMaster(path)
+    let winnr = bufwinnr('^' . a:path . '$')
     if winnr != -1
         call s:exec(winnr . "wincmd w")
         call g:EjosSetMaster()
         return
     endif
 
-    let curLine = line(".")
-    let curCol = col(".")
-    let topLine = line("w0")
+    if s:isWinOpen("tree")
+        call s:putCursorInWin("tree")
+        let curLine = line(".")
+        let curCol = col(".")
+        let topLine = line("w0")
+        call s:exec(winnr . "wincmd w")
+    endif
 
     call s:stackAll()
 
-    call s:putCursorInWin("tree")
-    exec "below new " . treenode.path.str({'format': 'Edit'})
+    call s:putCursorInWin("master")
+    exec "above new " . a:path
 
     call s:restoreAll()
 
-    let old_scrolloff=&scrolloff
-    let &scrolloff=0
-    call cursor(topLine, 1)
-    normal! zt
-    call cursor(curLine, curCol)
-    let &scrolloff = old_scrolloff
+    if s:isWinOpen("tree")
+        call s:putCursorInWin("tree")
+        let old_scrolloff=&scrolloff
+        let &scrolloff=0
+        call cursor(topLine, 1)
+        normal! zt
+        call cursor(curLine, curCol)
+        let &scrolloff = old_scrolloff
+    endif
 
-    call s:putCursorInWin("tree")
-    call s:exec('wincmd l')
+    call s:putCursorInWin("master")
     call g:EjosResize()
 endfunction
 
-
-call NERDTreeAddKeyMap({
-       \ 'key': 'i',
-       \ 'callback': 'NERDTreeOpenSlave',
-       \ 'quickhelpText': 'cww scroll',
-       \ 'scope': 'FileNode' })
-
-
-function! NERDTreeOpenSlave(treenode)
-    let treenode = a:treenode
-    let winnr = bufwinnr('^' . treenode.path.str() . '$')
+function! s:openSlave(path)
+    let winnr = bufwinnr('^' . a:path . '$')
     if winnr != -1
-        let master_nr = s:getWinNum("master")
-        if winnr == master_nr
-            return
-        endif
-        let top_slave = master_nr + 1
-        let diffnr = winnr - top_slave
-        if diffnr >= 1
-            call s:exec(winnr . "wincmd w")
-            call s:exec(diffnr . "wincmd ")
-        endif
-        call s:putCursorInWin("tree")
-        call g:EjosResize()
         return
     endif
 
-    let curLine = line(".")
-    let curCol = col(".")
-    let topLine = line("w0")
+    if s:isWinOpen("tree")
+        call s:putCursorInWin("tree")
+        let curLine = line(".")
+        let curCol = col(".")
+        let topLine = line("w0")
+        call s:exec(winnr . "wincmd w")
+    endif
 
     call s:stackAll()
 
     "go to top of the most top slave. i.e tag win or master win
-    call s:putCursorInWin("tree")
-    call s:exec("wincmd j")
-    exec "below new " . treenode.path.str({'format': 'Edit'})
+    call s:putCursorInWin("master")
+    exec "below new " . a:path
 
     call s:restoreAll()
 
-    let old_scrolloff=&scrolloff
-    let &scrolloff=0
-    call cursor(topLine, 1)
-    normal! zt
-    call cursor(curLine, curCol)
-    let &scrolloff = old_scrolloff
+    if s:isWinOpen("tree")
+        call s:putCursorInWin("tree")
+        let old_scrolloff=&scrolloff
+        let &scrolloff=0
+        call cursor(topLine, 1)
+        normal! zt
+        call cursor(curLine, curCol)
+        let &scrolloff = old_scrolloff
+    endif
 
     call g:EjosResize()
 endfunction
+
+let s:tree_up_dir_line = '.. (up a dir)'
 
 
 function! g:EjosSetMaster()
@@ -291,30 +279,6 @@ function! g:EjosToggleTagbar()
     call g:EjosResize()
 endfunction
 
-function! s:setSize(treeSize, masterSize, tagSize, slaveSize)
-    if s:isWinOpen("tree") 
-        call s:putCursorInWin("tree")
-        exec("silent vertical resize ". a:treeSize)
-    endif
-
-    call s:putCursorInWin("master")
-    exec("silent vertical resize ". a:masterSize)
-
-    if s:isWinOpen("tag") 
-        call s:putCursorInWin("tag")
-        exec("silent vertical resize ". a:tagSize)
-    endif
-
-    if s:hasSlave() 
-        call s:exec("wincmd b")
-        exec("silent vertical resize ". a:slaveSize)
-    endif
-    
-    if s:isWinOpen("tree") 
-        call s:putCursorInWin("tree")
-        exec("silent vertical resize ". a:treeSize)
-    endif
-endfunction
 
 function! g:EjosResize()
     let nr = winnr()
@@ -404,4 +368,74 @@ endfunction
 function! g:EjosWinMove(dir)
     call s:exec("wincmd ".a:dir)
     call g:EjosResize()
+endfunction
+
+"NERD TREE
+
+call NERDTreeAddKeyMap({
+       \ 'key': '<c-j>',
+       \ 'callback': 'NERDTreeCJ',
+       \ 'quickhelpText': 'cww scroll',
+       \ 'scope': 'all' })
+
+function! NERDTreeCJ()
+    wincmd j
+    "call g:EjosWinMove("k")
+endfunction
+
+call NERDTreeAddKeyMap({
+       \ 'key': '<c-k>',
+       \ 'callback': 'NERDTreeCK',
+       \ 'quickhelpText': 'cww scroll',
+       \ 'scope': 'all' })
+
+function! NERDTreeCK()
+    wincmd k
+    "call g:EjosWinMove("k")
+endfunction
+
+call NERDTreeAddKeyMap({
+       \ 'key': 'o',
+       \ 'callback': 'NERDTreeOpenMaster',
+       \ 'quickhelpText': 'cww scroll',
+       \ 'scope': 'FileNode' })
+
+function! NERDTreeOpenMaster(treenode)
+    if getline(".") ==# s:tree_up_dir_line
+        call g:NERDTreeUpDir(0)
+        return
+    endif
+
+    let treenode = a:treenode
+    if treenode == {} || isdirectory(treenode.path.str())
+        call treenode.activate(0)
+        return
+    endif
+
+    call s:openMaster(treenode.path.str())
+
+endfunction
+
+call NERDTreeAddKeyMap({
+       \ 'key': 'i',
+       \ 'callback': 'NERDTreeOpenSlave',
+       \ 'quickhelpText': 'cww scroll',
+       \ 'scope': 'FileNode' })
+
+
+function! NERDTreeOpenSlave(treenode)
+    let treenode = a:treenode
+    call s:openSlave(treenode.path.str())
+endfunction
+
+
+"CtrlP
+"
+function! g:CtrlPEjosOpen(action, line)
+    if a:action == "e"
+        call ctrlp#exit()
+        call s:openMaster(a:line)
+    else
+        call call('ctrlp#acceptfile', [a:action, a:line])
+    endif
 endfunction

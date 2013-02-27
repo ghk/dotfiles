@@ -17,6 +17,9 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'rosenfeld/conque-term'
 
+" syntax
+Bundle 'aliva/vim-fish'
+
 filetype plugin indent on
 
 " Indentation ------------
@@ -33,7 +36,7 @@ set autoindent
 set clipboard=unnamedplus
 
 "column limit hint
-let &colorcolumn="80,".join(range(120,999),",")
+let &colorcolumn=80
 
 
 let g:solarized_termtrans=1
@@ -50,16 +53,6 @@ if has("gui_running")
     set guioptions-=m
     set guioptions-=T
 endif
-
-" Use ctrl-[hjkl] to select the active split!
-nmap <silent> <c-h> :call g:EjosWinMove("h")<CR>
-nmap <silent> <c-j> :call g:EjosWinMove("j")<CR>
-nmap <silent> <c-k> :call g:EjosWinMove("k")<CR>
-nmap <silent> <c-l> :call g:EjosWinMove("l")<CR>
-
-map <silent> <F1> :call g:EjosToggleTree()<CR>
-map <silent> <F2> :call g:EjosToggleTagbar()<CR>
-map <silent> <C-\> :silent call g:EjosSetMaster()<CR>
 
 function SmoothScroll(up)
     if a:up
@@ -78,6 +71,17 @@ function SmoothScroll(up)
     endwhile
 endfunction
 
+" Use ctrl-[hjkl] to select the active split!
+nmap <silent> <c-h> :call g:EjosWinMove("h")<CR>
+nmap <silent> <c-j> :call g:EjosWinMove("j")<CR>
+nmap <silent> <c-k> :call g:EjosWinMove("k")<CR>
+nmap <silent> <c-l> :call g:EjosWinMove("l")<CR>
+
+map <silent> <F1> :call g:EjosToggleTree()<CR>
+map <silent> <F2> :call g:EjosToggleTagbar()<CR>
+map <silent> <F3> :CtrlP<CR>
+map <silent> <C-\> :silent call g:EjosSetMaster()<CR>
+
 nnoremap <silent> <C-U> :call SmoothScroll(1)<Enter>
 nnoremap <silent> <C-D> :call SmoothScroll(0)<Enter>
 map <silent> <F10> :call SmoothScroll(0)<Enter>
@@ -93,3 +97,5 @@ map <ScrollWheelDown> 2<C-E>
 nmap <Space> :
 
 autocmd VimResized * call g:EjosResize() 
+
+let g:ctrlp_open_func = { 'files': 'g:CtrlPEjosOpen' }

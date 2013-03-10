@@ -6,19 +6,9 @@ set shell=/bin/bash
 set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 
-Bundle 'gmarik/vundle'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'majutsushi/tagbar'
-Bundle 'kien/ctrlp.vim'
-Bundle 'SirVer/ultisnips'
-Bundle 'tpope/vim-fugitive'
-Bundle 'scrooloose/syntastic'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'rosenfeld/conque-term'
-
 " syntax
 Bundle 'aliva/vim-fish'
+
 
 filetype plugin indent on
 
@@ -73,15 +63,10 @@ function SmoothScroll(up)
 endfunction
 
 " Use ctrl-[hjkl] to select the active split!
-nmap <silent> <c-h> :call g:EjosWinMove("h")<CR>
-nmap <silent> <c-j> :call g:EjosWinMove("j")<CR>
-nmap <silent> <c-k> :call g:EjosWinMove("k")<CR>
-nmap <silent> <c-l> :call g:EjosWinMove("l")<CR>
-
-map <silent> <F1> :call g:EjosToggleTree()<CR>
-map <silent> <F2> :call g:EjosToggleTagbar()<CR>
-map <silent> <F3> :CtrlP<CR>
-map <silent> <C-\> :silent call g:EjosSetMaster()<CR>
+nmap <silent> <c-h> :wincmd h<CR>
+nmap <silent> <c-j> :wincmd j<CR>
+nmap <silent> <c-k> :wincmd k<CR>
+nmap <silent> <c-l> :wincmd l<CR>
 
 nnoremap <silent> <C-U> :call SmoothScroll(1)<Enter>
 nnoremap <silent> <C-D> :call SmoothScroll(0)<Enter>
@@ -97,6 +82,12 @@ map <ScrollWheelDown> 2<C-E>
 " muahahah
 nmap <Space> :
 
-autocmd VimResized * call g:EjosResize() 
+function! g:EjosLoadPack(packname)
+    exec ":source ~/.vim/bundlepack/".a:packname.".vim"
+endfunction
 
-let g:ctrlp_open_func = { 'files': 'g:CtrlPEjosOpen' }
+let s:packname = "default"
+if exists("g:ejos_pack")
+    s:packname = g:ejos_pack
+endif
+call g:EjosLoadPack(s:packname)

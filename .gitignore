@@ -5,6 +5,10 @@ link/config/fish/.fuse*
 
 link/config/ranger/history
 
+link/root/.PyCharm*/system
+link/root/.PyCharm*/config/*.key
+link/root/.PyCharm*/config/tasks
+
 link/root/.pentadactyl/info
 link/root/.vim/.netrwhist
 link/root/.vim/bundle

@@ -180,12 +180,10 @@ myofficemenu = {
     {" DjView",               "djview", beautiful.app_djview},
     --{" KChmViewer",           "kchmviewer", beautiful.kchmviewer_icon},
     --{" Leafpad",              "leafpad", beautiful.leafpad_icon},
-    {" LibreOffice Base",     "libreoffice --base", beautiful.app_libreoffice_base},
-    {" LibreOffice Calc",     "libreoffice --calc", beautiful.app_libreoffice_calc},
-    {" LibreOffice Draw",     "libreoffice --draw", beautiful.app_libreoffice_draw},
-    {" LibreOffice Impress",  "libreoffice --impress", beautiful.app_libreoffice_impress},
-    {" LibreOffice Math",     "libreoffice --math", beautiful.app_libreoffice_math},	
-    {" LibreOffice Writer",   "libreoffice --writer", beautiful.app_libreoffice_writer},
+    {" Microsoft Excel",     "excel", beautiful.app_libreoffice_calc},
+    {" Microsoft Word",     "word", beautiful.app_libreoffice_draw},
+    {" Microsoft PowerPoint",  "powerpoint", beautiful.app_libreoffice_impress},
+    {" Microsoft Onenote",     "onenote", beautiful.app_libreoffice_math},	
     --{" ScanTailor",           "scantailor", beautiful.scantailor_icon},
     --{" Sigil",                "sigil", beautiful.sigil_icon}, 
     {" TeXworks",             "texworks", beautiful.texworks_icon}
@@ -763,6 +761,7 @@ run_oncewa("dropbox start")
 --{{--|Gnome autostart
 
 os.execute("setxkbmap -option terminate:ctrl_alt_bksp &")
+os.execute("xmodmap ~/.xmodmaprc")
 --os.execute("synclient TapButton1=1")
 --os.execute("start-pulseaudio-x11 &")
 --os.execute("system-config-printer-applet &")

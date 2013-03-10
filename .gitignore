@@ -6,3 +6,5 @@ link/config/fish/.fuse*
 link/root/.pentadactyl/info
 link/root/.vim/.netrwhist
 link/root/.vim/bundle
+
+*.swp

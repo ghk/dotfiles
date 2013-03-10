@@ -25,7 +25,7 @@
         "search_modifier": "000", 
         "selection_color": "#ffff5e5e0000", 
         "selection_indicator": "\u2731", 
-        "show_hidden": false, 
+        "show_hidden": true, 
         "single_click_navigation": false, 
         "time_format": "%H:%M %d-%m-%y"
     }, 

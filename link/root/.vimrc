@@ -52,6 +52,7 @@ if has("gui_running")
     set guifont=Consolas\ 10
     set guioptions-=m
     set guioptions-=T
+else
 endif
 
 function SmoothScroll(up)

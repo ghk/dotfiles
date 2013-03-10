@@ -7,12 +7,15 @@ alias cl="command grc --colour=auto $ARGV"
 function tmux
     set -l TERM xterm-256color; command tmux $ARGV;
 end
+
 alias ping="cl ping $ARGV"
 alias traceroute="cl traceroute $ARGV"
 alias make="cl make $ARGV"
 alias netstat="cl netstat $ARGV"
 alias gcc="cl gcc $ARGV"
 alias diff="cl diff $ARGV"
+
+alias findn="find -name $ARGV"
 
 function vi_mode_user
     bind \co 'prevd; commandline -f repaint'

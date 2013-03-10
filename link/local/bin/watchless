@@ -1,0 +1,7 @@
+#!/bin/bash
+
+watchmedo shell-command --patterns="*.less" --command=\
+'LESS=`echo "${watch_src_path}" | sed s/.less/.css/`; \
+echo compile: "${watch_src_path}";\
+lessc "${watch_src_path}" "${LESS}"; \
+if [ "$?" -eq "0" ]; then echo wrote: "${LESS}"; fi' $*

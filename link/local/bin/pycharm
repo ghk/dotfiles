@@ -1,0 +1,2 @@
+#! /usr/local/bin/fish
+~/Programs/pycharm/bin/pycharm.sh (realpath $argv[1])

@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "#!/bin/bash" > ~/.local/bin/$1
+echo "source ~/.local/pyenv/bin/activate && $1" >> ~/.local/bin/$1
+chmod +x ~/.local/bin/$1

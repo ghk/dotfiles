@@ -1,0 +1,5 @@
+#! /bin/bash
+
+amixer --quiet set Master 30
+killall pulseaudio
+sudo alsactl init

@@ -1,0 +1,4 @@
+#! /bin/bash
+
+xrandr --output LVDS1 --mode 1600x900
+xrandr --output HDMI1 --mode 1920x1080 --left-of LVDS1

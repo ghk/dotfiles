@@ -1,0 +1,5 @@
+#!/bin/sh
+
+adb forward tcp:50000 tcp:50000
+/usr/sbin/gpsd tcp://127.0.0.1:50000
+python /home/ghk/.local/gegpsd-0.3.py

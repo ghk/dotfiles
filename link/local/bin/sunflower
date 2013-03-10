@@ -1,0 +1,3 @@
+#!/bin/sh
+
+python /src/sunflower-fm/Sunflower.py -t -r $1

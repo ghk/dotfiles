@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+  <component name="DimensionService">
+    <location key="#Browse_Repositories" x="200" y="132" />
+    <location key="OptionsEditor.0.16.1600.884" x="28" y="48" />
+    <location key="FileChooserDialogImpl" x="428" y="232" />
+  </component>
+  <component name="LafManager">
+    <laf class-name="com.sun.java.swing.plaf.gtk.GTKLookAndFeel" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Non-Project Files" value="Yellow" />
+    <property name="installation.uid" value="cc1af19e-12a6-4cdc-b484-08332471d3c9" />
+    <property name="Tests" value="Green" />
+    <property name="PyCharm.InitialConfiguration" value="true" />
+    <property name="PyCharm.initialConfigurationShown" value="true" />
+    <property name="FileTemplates.CurrentTab" value="Templates" />
+    <property name="PyCharm.InitialConfiguration.V4" value="true" />
+    <property name="file.colors.enable.tests" value="Green" />
+    <property name="PyCharm.InitialConfiguration.V3" value="true" />
+    <property name="PyCharm.InitialConfiguration.V2" value="true" />
+    <property name="file.colors.enable.non.project" value="Yellow" />
+    <property name="FileTemplates.SelectedTemplate" value="Html" />
+  </component>
+</application>
+

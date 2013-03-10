@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+  <component name="VimSettings">
+    <state enabled="true" keymap="Eclipse" />
+    <globalmarks />
+    <filemarks>
+      <file name="$USER_HOME$/Workspace/python/roma/borobudur/borobudur/config.py" timestamp="1362880186915">
+        <mark key="'" line="44" column="30" />
+      </file>
+    </filemarks>
+    <jumps>
+      <jump line="44" column="30" filename="$USER_HOME$/Workspace/python/roma/borobudur/borobudur/config.py" />
+    </jumps>
+    <registers>
+      <register name=":" type="4">
+        <text>qa</text>
+      </register>
+    </registers>
+    <search>
+      <last-dir>0</last-dir>
+      <show-last>false</show-last>
+    </search>
+    <history>
+      <history-cmd>
+        <entry>qa</entry>
+      </history-cmd>
+    </history>
+  </component>
+</application>
+

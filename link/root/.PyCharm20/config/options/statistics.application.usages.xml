@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+  <component name="StatisticsApplicationUsages">
+    <group name="vcs">
+      <project id="roma" values="Git" />
+    </group>
+    <group name="run-configuration-type">
+      <project id="roma" values="PythonConfigurationType" />
+    </group>
+    <group name="module type">
+      <project id="roma" values="PYTHON_MODULE" />
+    </group>
+    <group name="file-type">
+      <project id="roma" values="UNKNOWN,Images,ARCHIVE,PLAIN_TEXT,Python,LESS,HTML,JavaScript,JSON,CSS,ReST,Native,XML" />
+    </group>
+    <group name="javaScript Scope Usages">
+      <project id="roma" values="Project,Project,Project,Project,Project,Project,Project,Project,Project,Project" />
+    </group>
+    <group name="JavaScript versions">
+      <project id="roma" values="DEFAULT" />
+    </group>
+  </component>
+</application>
+

@@ -3,6 +3,8 @@ link/config/fish/fish_read_history
 link/config/fish/fishd.*
 link/config/fish/.fuse*
 
+link/config/ranger/history
+
 link/root/.pentadactyl/info
 link/root/.vim/.netrwhist
 link/root/.vim/bundle

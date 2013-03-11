@@ -14,6 +14,10 @@ alias make="cl make $ARGV"
 alias netstat="cl netstat $ARGV"
 alias gcc="cl gcc $ARGV"
 alias diff="cl diff $ARGV"
+alias vnotes="vim --cmd 'let g:ejos_pack=\"notes\"'"
+alias vpad="vim --cmd 'let g:ejos_pack=\"pad\"'"
+alias eclim="vim --cmd 'let g:ejos_pack=\"eclim\"'"
+alias geclim="gvim --cmd 'let g:ejos_pack=\"eclim\"'"
 
 alias findn="find -name $ARGV"
 

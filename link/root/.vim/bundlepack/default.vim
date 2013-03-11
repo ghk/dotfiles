@@ -1,6 +1,5 @@
-Bundle 'gmarik/vundle'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'majutsushi/tagbar'
+Bundle 'ghk/ejoswin'
+Bundle 'ghk/tagbar'
 Bundle 'kien/ctrlp.vim'
 Bundle 'SirVer/ultisnips'
 Bundle 'tpope/vim-fugitive'

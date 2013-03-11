@@ -5,6 +5,15 @@ filetype off
 set shell=/bin/bash
 set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
+set novisualbell
+
+Bundle 'gmarik/vundle'
+
+Bundle 'Lokaltog/vim-powerline'
+let Powerline_symbols = 'unicode'
+set laststatus=2
+
+Bundle 'sjl/gundo.vim'
 
 " syntax
 Bundle 'aliva/vim-fish'
@@ -40,8 +49,7 @@ colorscheme solarized
 
 if has("gui_running")
     set guifont=Consolas\ 10
-    set guioptions-=m
-    set guioptions-=T
+    set guioptions=
 else
 endif
 
@@ -88,6 +96,6 @@ endfunction
 
 let s:packname = "default"
 if exists("g:ejos_pack")
-    s:packname = g:ejos_pack
+    let s:packname = g:ejos_pack
 endif
 call g:EjosLoadPack(s:packname)

@@ -11,7 +11,6 @@ Bundle 'gmarik/vundle'
 
 "Bundle 'Lokaltog/vim-powerline'
 "let Powerline_symbols = 'fancy'
-"set laststatus=2
 set rtp+=~/.local/pyenv/powerline/powerline/bindings/vim
 
 Bundle 'sjl/gundo.vim'
@@ -24,13 +23,37 @@ filetype plugin indent on
 
 " Indentation ------------
 
-set number
 set expandtab
+set smarttab
 set tabstop=4
 set shiftwidth=4
 set tabstop=4
 set autoindent
-set hls
+
+set number
+set showmatch
+
+set hls "highlight search
+set incsearch "incremental search
+
+set complete-=i "remove included
+set laststatus=2
+
+set ttimeout
+set ttimeoutlen=50
+
+set showcmd 
+
+if &history < 1000
+    set history=1000
+endif
+if &tabpagemax < 50
+  set tabpagemax=50
+endif
+
+set display+=lastline
+
+set autoread "auto read again file if changed
 
 " Misc --------------
 

@@ -7,6 +7,7 @@ Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'rosenfeld/conque-term'
+Bundle 'ervandew/supertab'
 
 " Use ctrl-[hjkl] to select the active split!
 nunmap <c-h>

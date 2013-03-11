@@ -48,7 +48,7 @@ function! NERDTreeOpenMaster(treenode)
         return
     endif
 
-    call s:openMaster(treenode.path.str())
+    call g:EjosOpenMaster(treenode.path.str())
 
 endfunction
 
@@ -61,7 +61,7 @@ call NERDTreeAddKeyMap({
 
 function! NERDTreeOpenSlave(treenode)
     let treenode = a:treenode
-    call s:openSlave(treenode.path.str())
+    call g:EjosOpenSlave(treenode.path.str())
 endfunction
 
 

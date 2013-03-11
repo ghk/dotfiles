@@ -9,15 +9,16 @@ set novisualbell
 
 Bundle 'gmarik/vundle'
 
-Bundle 'Lokaltog/vim-powerline'
-let Powerline_symbols = 'unicode'
-set laststatus=2
+"Bundle 'Lokaltog/vim-powerline'
+"let Powerline_symbols = 'fancy'
+"set laststatus=2
+set rtp+=~/.local/pyenv/powerline/powerline/bindings/vim
 
 Bundle 'sjl/gundo.vim'
+Bundle 'Lokaltog/vim-easymotion'
 
 " syntax
 Bundle 'aliva/vim-fish'
-
 
 filetype plugin indent on
 
@@ -29,6 +30,7 @@ set tabstop=4
 set shiftwidth=4
 set tabstop=4
 set autoindent
+set hls
 
 " Misc --------------
 
@@ -51,6 +53,11 @@ if has("gui_running")
     set guifont=Consolas\ 10
     set guioptions=
 else
+    " command movements
+    cmap h <Left>
+    cmap l <Right>
+    cmap b <S-Left>
+    cmap w <S-Right>
 endif
 
 function SmoothScroll(up)
@@ -70,6 +77,9 @@ function SmoothScroll(up)
     endwhile
 endfunction
 
+" movement improvements
+nnoremap Y y$
+
 " Use ctrl-[hjkl] to select the active split!
 nmap <silent> <c-h> :wincmd h<CR>
 nmap <silent> <c-j> :wincmd j<CR>
@@ -80,15 +90,20 @@ nnoremap <silent> <C-U> :call SmoothScroll(1)<Enter>
 nnoremap <silent> <C-D> :call SmoothScroll(0)<Enter>
 map <silent> <F10> :call SmoothScroll(0)<Enter>
 map <silent> <F11> :call SmoothScroll(1)<Enter>
-inoremap <C-U> <Esc>:call SmoothScroll(1)<Enter>i
+inoremap <C-U> <Esc>:call SmoothScroll(1)<nter>i
 inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
 
 set mouse=n
 map <ScrollWheelUp> 2<C-Y>
 map <ScrollWheelDown> 2<C-E>
 
+" Leaders
+noremap <silent><Leader>/ :nohls<CR>
+
 " muahahah
 nmap <Space> :
+cmap w!! %!sudo tee > /dev/null %
+
 
 function! g:EjosLoadPack(packname)
     exec ":source ~/.vim/bundlepack/".a:packname.".vim"

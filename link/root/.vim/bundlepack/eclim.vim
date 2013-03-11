@@ -41,6 +41,7 @@ let g:EclimProjectTreeActions = [
 let g:EclimLocateFileDefaultAction = "EjosOpenMaster"
 let g:EclimJavaSearchSingleResult = "EjosOpenMaster"
 let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
+let g:SuperTabClosePreviewOnPopupClose = 1
 
 " Use ctrl-[hjkl] to select the active split!
 nunmap <c-h>

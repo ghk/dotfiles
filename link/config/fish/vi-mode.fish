@@ -37,16 +37,16 @@
 # some benefit from displaying the count here, but that would also make the
 # size of these strings vary, which I'd rather not do...
 set -l cn (set_color normal)
-set -g vi_mode_normal  (set_color blue)'n'$cn
-set -g vi_mode_replace (set_color red)'r'$cn
-set -g vi_mode_REPLACE (set_color --background=red)'R'$cn
-set -g vi_mode_insert  (set_color green)'i'$cn
-set -g vi_mode_delete  (set_color red)'d'$cn
-set -g vi_mode_change  (set_color yellow)'c'$cn
-set -g vi_mode_g       (set_color blue)'g'$cn
-set -g vi_mode_lower   (set_color blue)'u'$cn
-set -g vi_mode_upper   (set_color blue)'U'$cn
-set -g vi_mode_swapcase (set_color blue)'~'$cn
+set -g vi_mode_normal  'n'
+set -g vi_mode_replace 'r'
+set -g vi_mode_REPLACE 'R'
+set -g vi_mode_insert  'i'
+set -g vi_mode_delete  'd'
+set -g vi_mode_change  'c'
+set -g vi_mode_g       'g'
+set -g vi_mode_lower   'u'
+set -g vi_mode_upper   'U'
+set -g vi_mode_swapcase'~'
 
 set -g __vi_mode_undo_cmdline ''
 set -g __vi_mode_undo_cmdline_pos 0

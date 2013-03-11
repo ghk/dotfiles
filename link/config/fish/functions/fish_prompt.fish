@@ -37,11 +37,7 @@ function fish_prompt --description 'Write out the prompt'
 
     case '*'
 
-        if not set -q __fish_prompt_cwd
-                    set -g __fish_prompt_cwd (set_color $fish_color_cwd)
-                end
-
-        printf '[%s] %s%s@%s %s%s %s(%s)%s \f\r> ' "$vi_mode" "$__fish_color_blue" $USER $__fish_prompt_hostname "$__fish_prompt_cwd" (pwd | sed 's/\/home\/ghk/~/g') "$__fish_color_status" "$stat" "$__fish_prompt_normal"
+        printf '%s\f\r>' (powerline-shell $stat $vi_mode)
 
     end
 end

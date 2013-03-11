@@ -32,8 +32,8 @@ URxvt.lineSpace: 0
 ! Fonts
 URxvt.allow_bold: false
 /* URxvt.font: -*-terminus-medium-r-normal-*-12-120-72-72-c-60-iso8859-1 */
-URxvt*font: xft:Consolas:pixelsize=13:style=Regular:antialias=false
-URxvt*boldFont: xft:Consolas:pixelsize=13:style=Regular:antialias=false
+URxvt*font: xft:Consolas\ for\ Powerline:pixelsize=13:style=Regular:antialias=false
+URxvt*boldFont: xft:Consolas\ for\ Powerline:pixelsize=13:style=Regular:antialias=false
  
 ! Fix font space
 !URxvt*letterSpace: -1

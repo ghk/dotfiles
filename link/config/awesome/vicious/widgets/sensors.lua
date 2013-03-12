@@ -39,7 +39,7 @@ for line in f:lines() do
 coretwo = line
 end
 
-return "<span background='#1c1c1c' font='Consolas 12'> <span font='Consolas 9' background='#1c1c1c'>%d° <span color='#888888'>·</span> %d° </span></span>" % { coreone, coretwo }
+return "<span background='#1c1c1c'> %d°  %d° </span>" % { coreone, coretwo }
 
 end
 -- }}}

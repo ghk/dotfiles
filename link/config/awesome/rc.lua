@@ -98,7 +98,7 @@ naughty.config.presets.critical.opacity    = 0.9
 --{{---| Tags |------------------------------------------------------------
 
 tags = {
-    names  = { "1:Desk", "2:Term", "3:Dev", "4:Mail", "5:IM", "6:Media", "7", "8", "9" },
+    names  = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
     layouts = { layouts[2], layouts[5], layouts[3],
     layouts[2], layouts[1], layouts[1], layouts[1], layouts[3], layouts[3], layouts[3]},
 }   
@@ -257,7 +257,6 @@ mymainmenu = awful.menu(
 })
 
 mylauncher = awful.widget.launcher({ image = image(beautiful.menu_icon), menu = mymainmenu })
-awful.widget.layout.margins[mylauncher] = { top = 0}
 --{{---| Wibox |-----------------------------------------------------------
 
 mysystray = widget({ type = "systray", bg_normal="#00FF0000" })
@@ -324,15 +323,16 @@ for s = 1, screen.count() do
     --{{---| MEM widget |--------------------------------------------------
 
     memwidget = widget({ type = "textbox" })
-    vicious.register(memwidget, vicious.widgets.mem, '<span background="#313131" font="Consolas 12"> <span font="Consolas 9" background="#313131">$2MB </span></span>', 13)
+    vicious.register(memwidget, vicious.widgets.mem, '$2MB')
+    memwidget.bg = "#313131"
     memicon = widget ({type = "imagebox" })
     memicon.image = image(beautiful.widget_mem)
 
     --{{---| CPU / sensors widget |----------------------------------------
 
     cpuwidget = widget({ type = "textbox" })
-    vicious.register(cpuwidget, vicious.widgets.cpu,
-                     '<span background="'..beautiful.dgrey..'" font="Consolas 12"> <span font="Consolas 9" >$2% <span color="#888888">·</span> $3% </span></span>', 3)
+    vicious.register(cpuwidget, vicious.widgets.cpu,' $2%  $3%' )
+    cpuwidget.bg = "#313131"
     cpuicon = widget ({type = "imagebox" })
     cpuicon.image = image(beautiful.widget_cpu)
     sensors = widget({ type = "textbox" })
@@ -353,30 +353,26 @@ for s = 1, screen.count() do
     udisks_glue:set_detach_icon(beautiful.cancel)
     udisks_glue:set_Usb_icon(beautiful.usb)
     udisks_glue:set_Cdrom_icon(beautiful.cdrom)
-    awful.widget.layout.margins[udisks_glue.widget] = { top = 0}
-    udisks_glue.widget.resize = false
 
     --{{---| Battery widget |----------------------------------------------
 
     baticon = widget ({type = "imagebox" })
     baticon.image = image(beautiful.widget_battery)
     batwidget = widget({ type = "textbox" })
-    vicious.register( batwidget, vicious.widgets.bat, '<span background="'..beautiful.black..'" font="Consolas 12"> <span font="Consolas 9" background="'..beautiful.black..'">$1$2% </span></span>', 1, "BAT0" )
+    vicious.register( batwidget, vicious.widgets.bat, '<span background="'..beautiful.black..'"> $1$2% </span>', 1, "BAT0" )
     --{{---| Net widget |--------------------------------------------------
 
     netwidget = widget({ type = "textbox" })
     vicious.register(netwidget, 
                      vicious.widgets.net,
-                     '<span background="' .. beautiful.dgrey .. '" font="Consolas 12"> <span font="Consolas 9">${wlan0 down_kb} ↓↑ ${wlan0 up_kb}</span> </span>', 3)
+                     '<span background="' .. beautiful.dgrey .. '" >${wlan0 down_kb} ↓↑ ${wlan0 up_kb}</span>', 3)
 
     blingbling.popups.netstat(netwidget,{ title_color = beautiful.notify_font_color_1, established_color= beautiful.notify_font_color_3, listen_color=beautiful.notify_font_color_2})
     --
     my_net=blingbling.net.new()
-    my_net:set_height(18)
     --activate popup with ip informations on the net widget
     my_net:set_ippopup()
     my_net:set_show_text(true)
-    my_net:set_v_margin(3)
 
     neticon = widget ({type = "imagebox" })
     neticon.image = image(beautiful.widget_net)
@@ -385,8 +381,7 @@ for s = 1, screen.count() do
 
 
     --{{---| Calendar widget |---------------------------------------------
-    my_cal = awful.widget.textclock({ align = "right"}, '<span font="Consolas 12"><span font="Consolas 9">%a, %d %b %Y,%H:%M:%S </span></span>', 3)
-    awful.widget.layout.margins[my_cal] = { top = 2}
+    my_cal = awful.widget.textclock({ align = "right"}, '%a, %d %b %Y,%H:%M:%S')
     my_cal.bg = "#313131"
 
     -- Calendar widget to attach to the textclock
@@ -399,11 +394,11 @@ for s = 1, screen.count() do
     spr = widget({ type = "textbox" })
     spr.text = ' '
     sprd = widget({ type = "textbox" })
-    sprd.text = '<span background="#313131" font="Consolas 12"> </span>'
+    sprd.text = '<span background="#313131" > </span>'
     sprd2 = widget({ type = "textbox" })
-    sprd2.text = '<span background="#313131" font="Consolas 13"> </span>'
+    sprd2.text = '<span background="#313131" > </span>'
     spr3f = widget({ type = "textbox" })
-    spr3f.text = '<span background="#1c1c1c" font="Consolas 12"> </span>'
+    spr3f.text = '<span background="#1c1c1c" > </span>'
     arr1 = widget ({type = "imagebox" })
     arr1.image = image(beautiful.arr1)
     arr2 = widget ({type = "imagebox" })
@@ -430,7 +425,7 @@ for s = 1, screen.count() do
 
     --{{---| Panel |-------------------------------------------------------
 
-    mywibox[s] = awful.wibox({ position = "top", screen = s, height = "16" })
+    mywibox[s] = awful.wibox({ position = "top", screen = s})
     mywibox[s].widgets = {
         {
             -- top row left

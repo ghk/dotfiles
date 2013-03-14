@@ -80,11 +80,7 @@ layouts =
     awful.layout.suit.floating,
     ejos.tile,
     awful.layout.suit.tile,
-    awful.layout.suit.tile.bottom,
     awful.layout.suit.fair,
-    awful.layout.suit.spiral,
-    awful.layout.suit.max,
-    awful.layout.suit.magnifier
 }
 
 --{{---| Naughty theme |---------------------------------------------------
@@ -100,9 +96,9 @@ naughty.config.presets.critical.opacity    = 0.9
 --{{---| Tags |------------------------------------------------------------
 
 tags = {
-    names  = { "desk", "term", "dev", "mail", "im", "work", "work", "work", "float" },
-    layouts = { layouts[2], layouts[5], layouts[3],
-    layouts[2], layouts[1], layouts[1], layouts[3], layouts[3], layouts[1]},
+    names  = { "desk", "term", "mail", "im", "", "", "", "", "media" },
+    layouts = { layouts[2], layouts[3], 
+    layouts[2], layouts[1], layouts[1], layouts[3], layouts[3], layouts[3], layouts[1]},
 }   
 
 for s = 1, screen.count() do
@@ -704,23 +700,23 @@ awful.rules.rules = {
     },
     { 
         rule = { class = "Thunderbird" },
-        properties = { tag=tags[1][4] } 
+        properties = { tag=tags[1][3] } 
     },
     { 
         rule = { class = "Pidgin" },
-        properties = { tag=tags[1][5] } 
+        properties = { tag=tags[1][4] } 
     },
     { 
         rule = { class = "Skype" },
-        properties = { tag=tags[1][5] } 
+        properties = { tag=tags[1][4] } 
     },
     { 
         rule = { class = "banshee" },
-        properties = { tag=tags[1][6] } 
+        properties = { tag=tags[1][9] } 
     },
     { 
         rule = { instance = "trello.com" },
-        properties = { tag=tags[1][4] },
+        properties = { tag=tags[1][3] },
         callback = awful.client.setslave,
     },
     { 

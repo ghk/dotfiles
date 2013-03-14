@@ -1,2 +1,2 @@
-#!/bin/sh
-wine "C:\\Program Files\\Microsoft Office\\Office12\\POWERPNT.EXE" "$@"
+#!/usr/local/bin/fish
+wine "C:\\Program Files\\Microsoft Office\\Office12\\POWERPNT.EXE" (winepath -w $argv)

@@ -4,8 +4,12 @@
     <state enabled="true" keymap="Eclipse" />
     <globalmarks />
     <filemarks>
+      <file name="/src/sunflower-fm/application/associations.py" timestamp="1363293734489" />
       <file name="$USER_HOME$/Workspace/python/roma/borobudur/borobudur/config.py" timestamp="1362880186915">
         <mark key="'" line="44" column="30" />
+      </file>
+      <file name="/Python Console" timestamp="1363293535041">
+        <mark key="[" line="0" column="0" />
       </file>
     </filemarks>
     <jumps>
@@ -21,9 +25,12 @@
       <show-last>false</show-last>
     </search>
     <history>
+      <history-search />
       <history-cmd>
         <entry>qa</entry>
       </history-cmd>
+      <history-expr />
+      <history-input />
     </history>
   </component>
 </application>

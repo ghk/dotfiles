@@ -3,22 +3,36 @@
   <component name="StatisticsApplicationUsages">
     <group name="vcs">
       <project id="roma" values="Git" />
+      <project id="sunflower-fm" values="hg4idea" />
     </group>
     <group name="run-configuration-type">
       <project id="roma" values="PythonConfigurationType" />
     </group>
     <group name="module type">
       <project id="roma" values="PYTHON_MODULE" />
+      <project id="sunflower-fm" values="PYTHON_MODULE" />
     </group>
     <group name="file-type">
-      <project id="roma" values="UNKNOWN,Images,ARCHIVE,PLAIN_TEXT,Python,LESS,HTML,JavaScript,JSON,CSS,ReST,Native,XML" />
+      <project id="roma" values="ARCHIVE,Native,JSON,UNKNOWN,Images,LESS,ReST,HTML,JavaScript,PLAIN_TEXT,Python,XML,CSS" />
+      <project id="sunflower-fm" values="Images,XML,PLAIN_TEXT,Python,Locale,UNKNOWN" />
+    </group>
+    <group name="run-configuration-type-temp">
+      <project id="sunflower-fm" values="PythonConfigurationType" />
     </group>
     <group name="javaScript Scope Usages">
       <project id="roma" values="Project,Project,Project,Project,Project,Project,Project,Project,Project,Project" />
+      <project id="sunflower-fm" values="Project,Project,Project,Project,Project,Project,Project,Project,Project,Project" />
     </group>
     <group name="JavaScript versions">
       <project id="roma" values="DEFAULT" />
+      <project id="sunflower-fm" values="DEFAULT" />
     </group>
+  </component>
+  <component name="UsageTrigger">
+    <counts>
+      <entry feature="execute.PythonConfigurationType.Debug" count="1" />
+      <entry feature="execute.PythonConfigurationType.Run" count="2" />
+    </counts>
   </component>
 </application>
 

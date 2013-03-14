@@ -1,2 +1,2 @@
-#!/bin/sh
-wine "C:\\Program Files\\Microsoft Office\\Office12\\WINPROJ.EXE" "$@"
+#!/usr/local/bin/fish
+wine "C:\\Program Files\\Microsoft Office\\Office12\\WINPROJ.EXE" (winepath -w $argv)

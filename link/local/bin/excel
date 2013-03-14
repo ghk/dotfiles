@@ -1,2 +1,2 @@
-#!/bin/sh
-wine "C:\\Program Files\\Microsoft Office\\Office12\\EXCEL.EXE" "$@"
+#!/usr/local/bin/fish
+wine "C:\\Program Files\\Microsoft Office\\Office12\\EXCEL.EXE" (winepath -w $argv)

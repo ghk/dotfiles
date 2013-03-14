@@ -1,2 +1,2 @@
-#!/bin/sh
-wine "C:\\Program Files\\Microsoft Office\\Office12\\ONENOTE.EXE" "$@"
+#!/usr/local/bin/fish
+wine "C:\\Program Files\\Microsoft Office\\Office12\\ONENOTE.EXE" (winepath -w $argv)

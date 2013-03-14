@@ -12,15 +12,59 @@ require("ejos.tile")
 
 local capi = { key = key }
 
--- fns
+--{{---| functions |--------------------------------------------------------
 
-function report_focus(c)
-    os.execute("qdbus ejos.focused / ejos.focused.focus "..client.focus.pid.." &")
+super_on = false
+function toggle_on_super()
+    if super_on then
+        return
+    end
+    super_on = true
+    for s=1, #mytoggable do
+        for i=1, #mytoggable[s] do
+            mytoggable[s][i].visible = false
+        end
+    end
+    for s = 1, screen.count() do
+        for i=1, #tags[s] do
+            tags[s][i].name = i .. ":" .. tags.names[i]
+        end
+    end
 end
 
-function get_focused_cwd()
-    os.execute("qdbus ejos.focused / ejos.focused.focus "..client.focus.pid.." &")
+function toggle_off_super()
+    if not super_on then
+        return
+    end
+    super_on = false
+    for s=1, #mytoggable do
+        for i=1, #mytoggable[s] do
+            mytoggable[s][i].visible = true
+        end
+    end
+    for s = 1, screen.count() do
+        for i=1, #tags[s] do
+            tags[s][i].name = i
+        end
+    end
 end
+
+
+function run_once(prg)
+    awful.util.spawn_with_shell("pgrep -x " .. prg .. "; or " .. prg .. " &") 
+end
+
+function run_once_differ(search, prg)
+    awful.util.spawn_with_shell("pgrep -x " .. search .. "; or " .. prg .. " &") 
+end
+
+--{{---| run_once with args |----------------------------------------------
+
+function run_oncewa(prg) 
+    if not prg then do return nil end end
+    awful.util.spawn_with_shell('ps ux | grep -v grep | grep -F ' .. prg .. '; or ' .. prg .. ' &') 
+end
+
 
 --{{---| Java GUI's fix |--------------------------------------------------
 
@@ -361,23 +405,6 @@ for s = 1, screen.count() do
     vicious.register( batwidget, vicious.widgets.bat, '<span background="'..beautiful.black..'"> $1$2% </span>', 1, "BAT0" )
     --{{---| Net widget |--------------------------------------------------
 
-    netwidget = widget({ type = "textbox" })
-    vicious.register(netwidget, 
-                     vicious.widgets.net,
-                     '<span background="' .. beautiful.dgrey .. '" >${wlan0 down_kb} ↓↑ ${wlan0 up_kb}</span>', 3)
-
-    blingbling.popups.netstat(netwidget,{ title_color = beautiful.notify_font_color_1, established_color= beautiful.notify_font_color_3, listen_color=beautiful.notify_font_color_2})
-    --
-    my_net=blingbling.net.new()
-    --activate popup with ip informations on the net widget
-    my_net:set_ippopup()
-    my_net:set_show_text(true)
-
-    neticon = widget ({type = "imagebox" })
-    neticon.image = image(beautiful.widget_net)
-    netwidget:buttons(awful.util.table.join(awful.button({ }, 1,
-                                                         function () awful.util.spawn_with_shell(iptraf) end)))
-
 
     --{{---| Calendar widget |---------------------------------------------
     my_cal = awful.widget.textclock({ align = "right"}, '%a, %d %b %Y,%H:%M:%S')
@@ -478,18 +505,6 @@ for s = 1, screen.count() do
 
 end
 
--- Desktop Wibox
-
---widget1 = widget({ type = "textbox" })
---widget1.text = "Email"
---wibox1 = awful.wibox({ screen = 1, height = "16", align="right", width=200 })
---wibox1.y = 100
---wibox1.widgets = {
---    widget1
---}
-
--- Timer
-
 
 --{{---| Mouse bindings |--------------------------------------------------
 
@@ -498,24 +513,16 @@ root.buttons(awful.util.table.join(awful.button({ }, 3, function () mymainmenu:t
 --{{---| Key bindings |----------------------------------------------------
 
 globalkeys = awful.util.table.join(
-    awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
-    awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
     awful.key({ }, "Print", function () awful.util.spawn("scrot -e 'mv $f ~/Screenshots/ 2>/dev/null'") end),
+
+    -- Movement
 
     awful.key({ modkey,           }, "j",
               function ()
                   awful.client.focus.bydirection("down")
                   if client.focus then client.focus:raise() end
               end),
-    awful.key({ }, modkey,
-              function ()
-                  memicon:hide()
-              end,
-              function ()
-                  memicon:show()
-              end
-              ),
     awful.key({ modkey,           }, "k",
               function ()
                   awful.client.focus.bydirection("up")
@@ -542,16 +549,40 @@ globalkeys = awful.util.table.join(
                   if client.focus then client.focus:raise() end
               end),
 
-    awful.key({ modkey,           }, "w", function () mymainmenu:show({keygrabber=true}) end),
-    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
-    awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end),
+    -- Swaps
+    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.bydirection("down")    end),
+    awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.bydirection("up")    end),
+    awful.key({ modkey, "Shift"   }, "h", function () awful.client.swap.bydirection("left")    end),
+    awful.key({ modkey, "Shift"   }, "l", function () awful.client.swap.bydirection("right")    end),
+    awful.key({ modkey, "Shift"   }, "o", function () awful.client.swap.byidx(  1)    end),
+    awful.key({ modkey, "Shift"   }, "i", function () awful.client.swap.byidx( -1)    end),
+
+    -- Screen Movement
     awful.key({ modkey, "Control" }, "h", function () awful.screen.focus_relative( 1) end),
     awful.key({ modkey, "Control" }, "l", function () awful.screen.focus_relative(-1) end),
+
+
+    -- Resize
+    awful.key({ modkey,           }, ".",        function () awful.tag.incmwfact( 0.05)    end),
+    awful.key({ modkey,           }, ",",        function () awful.tag.incmwfact(-0.05)    end),
+    awful.key({ modkey, "Shift"   }, "h",        function () awful.tag.incnmaster( 1)      end),
+    awful.key({ modkey, "Shift"   }, "l",        function () awful.tag.incnmaster(-1)      end),
+    awful.key({ modkey, "Control" }, "h",        function () awful.tag.incncol( 1)         end),
+    awful.key({ modkey, "Control" }, "l",        function () awful.tag.incncol(-1)         end),
+
+    --Other awesome
+    awful.key({ modkey, "Control" }, "r",        awesome.restart),
+    awful.key({ modkey, "Shift",     "Control"}, "r", awesome.quit),
+    awful.key({ modkey, "Control" }, "n",        awful.client.restore),
+    awful.key({ modkey },            "r",        function () mypromptbox[mouse.screen]:run() end),
+    awful.key({ modkey,           }, "space",    function () awful.layout.inc(layouts,  1) end),
+    awful.key({ modkey, "Shift"   }, "space",    function () awful.layout.inc(layouts, -1) end),
+    awful.key({ modkey,           }, "w", function () mymainmenu:show({keygrabber=true}) end),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
     awful.key({ modkey,           }, "Tab", function () awful.client.focus.history.previous()
               if client.focus then client.focus:raise() end end),
 
-    --{{---| Hotkeys |-----------------------------------------------------
+    --Applications
 
     --{{---| Terminals, shells und multiplexors |--------------------------
     awful.key({ modkey,           }, "Return",   function () 
@@ -560,47 +591,29 @@ globalkeys = awful.util.table.join(
               else
                   awful.util.spawn(terminal) 
               end
-          end),                 --
-    awful.key({ modkey,           }, "z",        function () awful.util.spawn(terminal .. " -x zsh") end),    --
-    awful.key({ modkey, "Shift"   }, "z",        function () awful.util.spawn(terminalr .. " -x zsh") end),   --
-    --{{-------------------------------------------------------------------
-
-    awful.key({ modkey, "Control" }, "r",        awesome.restart),
-    awful.key({ modkey, "Shift",     "Control"}, "r", awesome.quit),
-    awful.key({ modkey, "Control" }, "n",        awful.client.restore),
-    awful.key({ modkey },            "r",        function () mypromptbox[mouse.screen]:run() end),
-    awful.key({ modkey,           }, ".",        function () awful.tag.incmwfact( 0.05)    end),
-    awful.key({ modkey,           }, ",",        function () awful.tag.incmwfact(-0.05)    end),
-    awful.key({ modkey, "Shift"   }, "h",        function () awful.tag.incnmaster( 1)      end),
-    awful.key({ modkey, "Shift"   }, "l",        function () awful.tag.incnmaster(-1)      end),
-    awful.key({ modkey, "Control" }, "h",        function () awful.tag.incncol( 1)         end),
-    awful.key({ modkey, "Control" }, "l",        function () awful.tag.incncol(-1)         end),
-    awful.key({ modkey,           }, "space",    function () awful.layout.inc(layouts,  1) end),
-    awful.key({ modkey, "Shift"   }, "space",    function () awful.layout.inc(layouts, -1) end),
-    awful.key({ modkey,           }, "x",        function () awful.util.spawn("xmind") end),
-    awful.key({ modkey, "Shift"   }, "x",        function () awful.util.spawn("sudo xfe") end),
-    awful.key({ modkey,           }, "s",        function () awful.util.spawn("spacefm") end),
+          end),                
     awful.key({ modkey },            "v",        function () awful.util.spawn_with_shell("gvim -geometry 92x58+710+24") end),    
-    awful.key({ modkey },            "Menu",     function () awful.util.spawn_with_shell("gmrun") end),
-    awful.key({ modkey },            "d",        function () awful.util.spawn_with_shell("goldendict") end),
     awful.key({ modkey },            "g",        function () awful.util.spawn_with_shell("gcolor2") end),
     awful.key({ modkey },            "Print",    function () awful.util.spawn_with_shell("screengrab") end),
     awful.key({ modkey, "Control"},  "Print",    function () awful.util.spawn_with_shell("screengrab --region") end),
     awful.key({ modkey, "Shift"},    "Print",    function () awful.util.spawn_with_shell("screengrab --active") end),
-    awful.key({ modkey },            "'",        function () awful.util.spawn_with_shell("leafpad") end),
-    awful.key({ modkey },            "b",        function () awful.util.spawn_with_shell("~/Tools/rubymine.run") end),
-    awful.key({ modkey },            "`",        function () awful.util.spawn_with_shell("xwinmosaic") end),
     awful.key({ modkey, "Control" }, "m",        function () awful.util.spawn_with_shell(musicplr) end),
-    awful.key({ },"XF86AudioPrev",              function () awful.util.spawn_with_shell("qdbus org.bansheeproject.Banshee /org/bansheeproject/Banshee/PlaybackController org.bansheeproject.Banshee.PlaybackController.Previous false") end),
-    awful.key({ },"XF86AudioNext",              function () awful.util.spawn_with_shell("qdbus org.bansheeproject.Banshee /org/bansheeproject/Banshee/PlaybackController org.bansheeproject.Banshee.PlaybackController.Next false") end),
-    awful.key({ },            "XF86AudioPlay",        function () awful.util.spawn_with_shell("qdbus org.bansheeproject.Banshee /org/bansheeproject/Banshee/PlayerEngine org.bansheeproject.Banshee.PlayerEngine.TogglePlaying") end),
-    awful.key({ }, "XF86Calculator",             function () awful.util.spawn_with_shell("gcalctool") end),
-    awful.key({ }, "XF86Sleep",                  function () awful.util.spawn_with_shell("sudo pm-hibernate") end),
+
+    ---- Audio
     awful.key({ }, "XF86AudioPlay",              function () awful.util.spawn_with_shell("ncmpcpp toggle") end),
     awful.key({ }, "XF86AudioStop",              function () awful.util.spawn_with_shell("ncmpcpp stop") end),
     awful.key({ }, "XF86AudioLowerVolume",       function () couth.notifier:notify(couth.alsa:setVolume('Master','3dB-')) end),
     awful.key({ }, "XF86AudioRaiseVolume",       function () couth.notifier:notify(couth.alsa:setVolume('Master','3dB+')) end),
-    awful.key({ }, "XF86AudioMute",              function () couth.notifier:notify(couth.alsa:setVolume('Master','toggle')) end)
+    awful.key({ }, "XF86AudioMute",              function () couth.notifier:notify(couth.alsa:setVolume('Master','toggle')) end),
+    awful.key({ },"XF86AudioPrev",              function () awful.util.spawn_with_shell("qdbus org.bansheeproject.Banshee /org/bansheeproject/Banshee/PlaybackController org.bansheeproject.Banshee.PlaybackController.Previous false") end),
+    awful.key({ },"XF86AudioNext",              function () awful.util.spawn_with_shell("qdbus org.bansheeproject.Banshee /org/bansheeproject/Banshee/PlaybackController org.bansheeproject.Banshee.PlaybackController.Next false") end),
+    awful.key({ },            "XF86AudioPlay",        function () awful.util.spawn_with_shell("qdbus org.bansheeproject.Banshee /org/bansheeproject/Banshee/PlayerEngine org.bansheeproject.Banshee.PlayerEngine.TogglePlaying") end),
+
+
+    -- Other misc
+    --
+    awful.key({ }, "XF86Calculator",             function () awful.util.spawn_with_shell("gcalctool") end),
+    awful.key({ }, "XF86Sleep",                  function () awful.util.spawn_with_shell("sudo pm-hibernate") end)
 )
 
 clientkeys = awful.util.table.join(
@@ -635,34 +648,6 @@ clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
     awful.button({ modkey }, 1, awful.mouse.client.move),
     awful.button({ modkey, "Shift" }, 1, awful.mouse.client.resize))
-
---{{---| Set keys |--------------------------------------------------------
---
-function toggle_on_super()
-    for s=1, #mytoggable do
-        for i=1, #mytoggable[s] do
-            mytoggable[s][i].visible = false
-        end
-    end
-    for s = 1, screen.count() do
-        for i=1, #tags[s] do
-            tags[s][i].name = i .. ":" .. tags.names[i]
-        end
-    end
-end
-
-function toggle_off_super()
-    for s=1, #mytoggable do
-        for i=1, #mytoggable[s] do
-            mytoggable[s][i].visible = true
-        end
-    end
-    for s = 1, screen.count() do
-        for i=1, #tags[s] do
-            tags[s][i].name = i
-        end
-    end
-end
 
 root.keys(globalkeys)
 
@@ -748,13 +733,8 @@ awful.rules.rules = {
 --{{---| Signals |---------------------------------------------------------
     
 client.add_signal("manage", function (c, startup)
-    -- Add a titlebar
-    -- awful.titlebar.add(c, { modkey = modkey })
 
     if not startup then
-        -- Set the windows at the slave,
-        -- i.e. put it at the end of others instead of setting it master.
-        -- awful.client.setslave(c)
 
         -- Put windows in a smart way, only if they does not set an initial position.
         if not c.size_hints.user_position and not c.size_hints.program_position then
@@ -767,30 +747,11 @@ end)
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
---{{---| run_once |--------------------------------------------------------
-
-function run_once(prg)
-    awful.util.spawn_with_shell("pgrep -x " .. prg .. "; or " .. prg .. " &") 
-end
-
-function run_once_differ(search, prg)
-    awful.util.spawn_with_shell("pgrep -x " .. search .. "; or " .. prg .. " &") 
-end
-
---{{---| run_once with args |----------------------------------------------
-
-function run_oncewa(prg) 
-    if not prg then do return nil end end
-    awful.util.spawn_with_shell('ps ux | grep -v grep | grep -F ' .. prg .. '; or ' .. prg .. ' &') 
-end
-
-
 --{{--| Autostart |--------------------------------------------------------
 
 run_once("compton")
 run_once("focused")
 run_once_differ("conky", 'conky -c "/home/ghk/.config/conky/conkyrc"')
---run_once_differ("urxvtd", "urxvtd -o -f -q")
 
 run_once_differ("nm-applet", "dbus-launch nm-applet --sm-disable")
 os.execute("/home/ghk/.local/pyenv/bin/single.py -c /home/ghk/.local/bin/awesome-mod-hint &")
@@ -798,9 +759,6 @@ os.execute("/home/ghk/.local/pyenv/bin/single.py -c /home/ghk/.local/bin/awesome
 run_once("udisks-glue")
 -- os.execute("sudo /etc/init.d/dcron start &")
 --run_once("kbdd")
---run_once("glipper")
---os.execute("pkill glipper")
---os.execute("glipper &")
 run_once("glipper")
 
 run_oncewa("dropbox start")
@@ -809,6 +767,3 @@ run_oncewa("dropbox start")
 
 os.execute("setxkbmap -option terminate:ctrl_alt_bksp &")
 os.execute("xmodmap ~/.xmodmaprc")
---os.execute("synclient TapButton1=1")
---os.execute("start-pulseaudio-x11 &")
---os.execute("system-config-printer-applet &")

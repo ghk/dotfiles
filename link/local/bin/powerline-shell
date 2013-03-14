@@ -137,15 +137,27 @@ def add_cwd_segment(powerline, cwd, maxdepth, cwd_only=False):
     cwd = cwd or os.getenv('PWD')
     cwd = cwd.decode('utf-8')
 
-    if cwd.find(home) == 0:
-        cwd = cwd.replace(home, '~', 1)
+    if cwd.startswith(home):
+        cur = cwd[len(home):]
+        if cur.startswith("/Workspace"):
+            cur = cur[len("/Workspace"):]
+            name = 'Workspace'
+            if len(cur):
+                for lang in ["android", "c", "java", "js", "vstudio", "php", "python"]:
+                    if cur.startswith("/"+lang):
+                        cur = cur[len("/"+lang):]
+                        name = lang
+                        break
+            cwd = u'\u2710 ' + name + cur
+        else:
+            cwd = u'\u2302 ~'+cur
 
     if cwd[0] == '/':
         cwd = cwd[1:]
 
     names = cwd.split('/')
     if len(names) > maxdepth:
-        names = names[:2] + [u'\u2026'] + names[2 - maxdepth:]
+        names = names[:1] + [u'\u2026'] + names[1 - maxdepth:]
 
     if not cwd_only:
         for n in names[:-1]:
@@ -303,14 +315,10 @@ def add_virtual_env_segment(powerline, cwd):
 
 
 def add_root_indicator(powerline, error):
-    bg = Color.CMD_PASSED_BG
-    fg = Color.CMD_PASSED_FG
     if int(error) != 0:
         fg = Color.CMD_FAILED_FG
         bg = Color.CMD_FAILED_BG
-
-    #powerline.append(Segment(powerline, powerline.root_indicator, fg, bg))
-    powerline.append(Segment(powerline, ' %s ' % error, fg, bg))
+        powerline.append(Segment(powerline, ' %s ' % error, fg, bg))
 
 
 def get_valid_cwd():
@@ -352,7 +360,7 @@ if __name__ == '__main__':
     #p.append(Segment(p, ' \\u ', 250, 240))
     #p.append(Segment(p, ' \\h ', 250, 238))
     add_mode_segment(p, args.vi_mode)
-    add_cwd_segment(p, cwd, 5, args.cwd_only)
+    add_cwd_segment(p, cwd, 4, args.cwd_only)
     add_repo_segment(p, cwd)
     add_root_indicator(p, args.prev_error)
     sys.stdout.write(p.draw())

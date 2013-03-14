@@ -37,7 +37,7 @@ function fish_prompt --description 'Write out the prompt'
 
     case '*'
 
-        printf '%s\f\r>' (powerline-shell $stat $vi_mode)
+        printf '%s' (powerline-shell $stat $vi_mode)
 
     end
 end

@@ -1,0 +1,14 @@
+#! /home/ghk/.local/pyenv/bin/python
+
+from evdev import InputDevice, categorize, ecodes
+from subprocess import Popen, PIPE, STDOUT
+
+dev = InputDevice('/dev/input/event0')
+
+for event in dev.read_loop():
+    if event.type == ecodes.EV_KEY and (event.code == 125 or event.code == 127):
+        fn = "toggle_on_super()"
+        if event.value == 0:
+            fn = "toggle_off_super()"
+        p = Popen(['awesome-client'], stdin=PIPE )
+        p.communicate(input=fn)

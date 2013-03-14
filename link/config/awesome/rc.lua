@@ -10,6 +10,8 @@ require('couth.alsa')
 require("blingbling")
 require("ejos.tile")
 
+local capi = { key = key }
+
 -- fns
 
 function report_focus(c)
@@ -98,14 +100,15 @@ naughty.config.presets.critical.opacity    = 0.9
 --{{---| Tags |------------------------------------------------------------
 
 tags = {
-    names  = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+    names  = { "desk", "term", "dev", "mail", "im", "work", "work", "work", "float" },
     layouts = { layouts[2], layouts[5], layouts[3],
-    layouts[2], layouts[1], layouts[1], layouts[1], layouts[3], layouts[3], layouts[3]},
+    layouts[2], layouts[1], layouts[1], layouts[3], layouts[3], layouts[1]},
 }   
 
 for s = 1, screen.count() do
     tags[s] = awful.tag(tags.names, s, tags.layouts)
     for i=1, #tags.names do
+        tags[s][i].name = i
         if(awful.layout.getname(tags.layouts[i])) == "desktile" then
             awful.tag.incmwfact(0.15, tags[s][i])
         elseif(awful.layout.getname(tags.layouts[i])) == "tile" then
@@ -262,7 +265,7 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.menu_icon), menu = 
 mysystray = widget({ type = "systray", bg_normal="#00FF0000" })
 mysystray.bg = "#FF0000"
 mywibox = {}
-mytopwibox = {}
+mytoggable= {}
 mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -421,6 +424,8 @@ for s = 1, screen.count() do
     arr9.image = image(beautiful.arr9)
     arr0 = widget ({type = "imagebox" })
     arr0.image = image(beautiful.arr0)
+    arr9b = widget ({type = "imagebox" })
+    arr9b.image = image(beautiful.arr9)
 
 
     --{{---| Panel |-------------------------------------------------------
@@ -451,11 +456,27 @@ for s = 1, screen.count() do
         arr0,
         cpuwidget,
         cpuicon,
-        arr9,
+        arr9b,
         s == 1 and mysystray,
         spr,
         mytasklist[s], 
         layout = awful.widget.layout.horizontal.rightleft 
+    }
+    mytoggable[s]= {
+        my_cal,
+        arr9,
+        batwidget,
+        baticon,
+        arr0, 
+        udisks_glue.widget,
+        memwidget,
+        memicon,
+        arr9,
+        sensors,
+        tempicon,
+        arr0,
+        cpuwidget,
+        cpuicon,
     }
     awful.screen.padding(screen[s],{top = 4})
 
@@ -491,6 +512,14 @@ globalkeys = awful.util.table.join(
                   awful.client.focus.bydirection("down")
                   if client.focus then client.focus:raise() end
               end),
+    awful.key({ }, modkey,
+              function ()
+                  memicon:hide()
+              end,
+              function ()
+                  memicon:show()
+              end
+              ),
     awful.key({ modkey,           }, "k",
               function ()
                   awful.client.focus.bydirection("up")
@@ -612,6 +641,32 @@ clientbuttons = awful.util.table.join(
     awful.button({ modkey, "Shift" }, 1, awful.mouse.client.resize))
 
 --{{---| Set keys |--------------------------------------------------------
+--
+function toggle_on_super()
+    for s=1, #mytoggable do
+        for i=1, #mytoggable[s] do
+            mytoggable[s][i].visible = false
+        end
+    end
+    for s = 1, screen.count() do
+        for i=1, #tags[s] do
+            tags[s][i].name = i .. ":" .. tags.names[i]
+        end
+    end
+end
+
+function toggle_off_super()
+    for s=1, #mytoggable do
+        for i=1, #mytoggable[s] do
+            mytoggable[s][i].visible = true
+        end
+    end
+    for s = 1, screen.count() do
+        for i=1, #tags[s] do
+            tags[s][i].name = i
+        end
+    end
+end
 
 root.keys(globalkeys)
 
@@ -742,6 +797,7 @@ run_once_differ("conky", 'conky -c "/home/ghk/.config/conky/conkyrc"')
 --run_once_differ("urxvtd", "urxvtd -o -f -q")
 
 run_once_differ("nm-applet", "dbus-launch nm-applet --sm-disable")
+os.execute("/home/ghk/.local/pyenv/bin/single.py -c /home/ghk/.local/bin/awesome-mod-hint &")
 
 run_once("udisks-glue")
 -- os.execute("sudo /etc/init.d/dcron start &")

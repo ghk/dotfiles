@@ -85,8 +85,6 @@ command proxy -nargs=1 :set! network.proxy.type=<args>
 set passkeys+=mail.google.com:'!#*+-./<C-Down><C-s><Enter>?INU[]acejklmnopqrsuvxyz',*a,*n,*r,*s,*t,*u,ga,gc,gd,gi,gl,gs,gt,yo
 set strictfocus+=mail.google.com:laissez-fair
 
-set passkeys+=groups.google.com:'!#*+-./<C-Down><C-s><Enter>?INU[]acejklmnopqrsuvxyz',*a,*n,*r,*s,*t,*u,ga,gc,gd,gi,gl,gs,gt,yo
-set strictfocus+=groups.google.com:laissez-fair
 
 nmap <Space> :
 nmap <F10> <C-d>

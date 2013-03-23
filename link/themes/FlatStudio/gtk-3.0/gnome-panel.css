@@ -83,7 +83,7 @@ PanelApplet *:prelight {
 PanelApplet *:active,
 PanelApplet *:prelight:active {
     color: @os_chrome_selected_fg_color;
-    text-shadow: 0px 1px shade (#2255F5, 0.6);
+    text-shadow: 0 1 shade (#2255F5, 0.6);
 }
 
 NaTrayApplet {

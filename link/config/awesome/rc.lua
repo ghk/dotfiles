@@ -10,6 +10,8 @@ require('couth.alsa')
 require("blingbling")
 require("ejos.tile")
 
+os.execute("fishd")
+
 local capi = { key = key }
 
 --{{---| functions |--------------------------------------------------------
@@ -574,7 +576,6 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "r",        awesome.restart),
     awful.key({ modkey, "Shift",     "Control"}, "r", awesome.quit),
     awful.key({ modkey, "Control" }, "n",        awful.client.restore),
-    awful.key({ modkey },            "r",        function () mypromptbox[mouse.screen]:run() end),
     awful.key({ modkey,           }, "space",    function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space",    function () awful.layout.inc(layouts, -1) end),
     awful.key({ modkey,           }, "w", function () mymainmenu:show({keygrabber=true}) end),
@@ -592,6 +593,7 @@ globalkeys = awful.util.table.join(
                   awful.util.spawn(terminal) 
               end
           end),                
+    awful.key({ modkey },            "r",        function () awful.util.spawn_with_shell("gmrun") end),
     awful.key({ modkey },            "v",        function () awful.util.spawn_with_shell("gvim -geometry 92x58+710+24") end),    
     awful.key({ modkey },            "g",        function () awful.util.spawn_with_shell("gcolor2") end),
     awful.key({ modkey },            "Print",    function () awful.util.spawn_with_shell("screengrab") end),
@@ -748,9 +750,12 @@ client.add_signal("focus", function(c) c.border_color = beautiful.border_focus e
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
 --{{--| Autostart |--------------------------------------------------------
+print("ea");
 
 run_once("compton")
+print("ea2");
 run_once("focused")
+print("ea3");
 run_once_differ("conky", 'conky -c "/home/ghk/.config/conky/conkyrc"')
 
 run_once_differ("nm-applet", "dbus-launch nm-applet --sm-disable")

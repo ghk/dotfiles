@@ -1,8 +1,13 @@
-. ~/.config/fish/vi-mode.fish
-
 set fish_greeting
 set VIRTUAL_ENV_DISABLE_PROMPT 1
 set PATH /home/ghk/.local/bin /opt/vagrant/bin /usr/local/bin $PATH
+set TERM xterm-256color; 
+
+if not status --is-interactive
+    exit
+end
+
+. ~/.config/fish/vi-mode.fish
 
 alias cl="command grc --colour=auto $ARGV"
 function tmux

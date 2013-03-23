@@ -108,7 +108,7 @@ DbusmenuGtkMenu .menu,
     padding: 3px 4px;
 
     color: @menu_fg_color;
-    text-shadow: 0px 1px alpha(#fff, 0.10);
+    text-shadow: 0 1 alpha(#fff, 0.10);
 }
 
 
@@ -118,7 +118,7 @@ DbusmenuGtkMenu .menuitem,
 .primary-toolbar .menuitem {
 	/* dark menu-item */
     color: @theme_fg_dark_color;
-    text-shadow: 0px 1px @theme_shadow_dark_color;
+    text-shadow: 0 1 @theme_shadow_dark_color;
 }
 
 GtkTreeMenu.menu {
@@ -140,11 +140,11 @@ GtkTreeMenu .menuitem {
 /* Workaround for lp:949368 */
 GtkComboBox .menuitem * {
     color: @menu_fg_color;
-    text-shadow: 0px 1px alpha(#fff, 0.10);
+    text-shadow: 0 1 alpha(#fff, 0.10);
 }
 GtkComboBox .menuitem *:hover {
     color: @theme_selected_fg_color;
-   	text-shadow: 0px 1px @theme_selected_shadow_color;
+   	text-shadow: 0 1 @theme_selected_shadow_color;
 }
 
 .menuitem:hover,
@@ -155,7 +155,7 @@ GtkComboBox .menuitem *:hover {
                                      to   (shade (@theme_selected_bg_color, 1.0)));
 
     color: @theme_selected_fg_color;
-   	text-shadow: 0px 1px @theme_selected_shadow_color;
+   	text-shadow: 0 1 @theme_selected_shadow_color;
     -unico-bullet-color: @theme_selected_fg_color;
 }
 
@@ -171,7 +171,7 @@ DbusmenuGtkMenu .menuitem:hover,
                                      to   (shade (@theme_selected_bg_color, 1.0)));
 
     color: @theme_selected_fg_color;
-	text-shadow: 0px 1px @theme_selected_shadow_color;
+	text-shadow: 0 1 @theme_selected_shadow_color;
     -unico-bullet-color: @theme_selected_fg_color;
 
     border-image: none;
@@ -184,7 +184,7 @@ DbusmenuGtkMenu .menuitem:hover,
 .menuitem *:hover {
     /* color: @menu_fg_color; */
     color: @theme_selected_fg_color;
-   	text-shadow: 0px 1px @theme_selected_shadow_color;
+   	text-shadow: 0 1 @theme_selected_shadow_color;
 }
 
 .menuitem.check,

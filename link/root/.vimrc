@@ -55,9 +55,16 @@ set display+=lastline
 
 set autoread "auto read again file if changed
 
+"highlight current line
+set cul
+
+"search ignore case, but if case differs use it!
+set ignorecase
+set smartcase
+
 " Misc --------------
 
-set clipboard=unnamedplus
+"set clipboard=unnamedplus
 
 "column limit hint
 let &colorcolumn=80
@@ -70,6 +77,7 @@ let &t_Co=256
 set title
 syntax on
 set background=dark
+let base16colorspace=256 
 colorscheme solarized
 
 if has("gui_running")
@@ -120,11 +128,21 @@ set mouse=n
 map <ScrollWheelUp> 2<C-Y>
 map <ScrollWheelDown> 2<C-E>
 
+" Search mappings: These will make it so that going to the next one in a
+" search will center on the line it's found in.
+map N Nzz
+map n nzz
+
 " Leaders
+" clear search results
 noremap <silent><Leader>/ :nohls<CR>
+"clipboard register
+noremap <silent><Leader>x "*
+vnoremap <silent><Leader>x "+
 
 " muahahah
 nmap <Space> :
+vmap <Space> :
 cmap w!! %!sudo tee > /dev/null %
 
 

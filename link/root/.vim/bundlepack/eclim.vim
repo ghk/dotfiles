@@ -60,6 +60,31 @@ map <silent> <F3> :LocateFile<CR>
 map <silent> <C-\> :silent call g:EjosSetMaster()<CR>
 
 nmap <silent> gd :JavaSearchContext<CR>
+noremap <silent> <buffer> <leader>d :JavaDocSearch -x declarations<cr>
+
+" generators
+nmap <silent> <Leader>gi :JavaImport<CR>
+nmap <silent> <Leader>gm :JavaImpl<CR>
+nmap <silent> <Leader>gd :JavaDelegate<CR>
+
+nmap <silent> <Leader>gc :JavaConstructor<CR>
+vmap <silent> <Leader>gc :JavaConstructor<CR>
+nmap <silent> <Leader>gg :JavaGet<CR>
+vmap <silent> <Leader>gg :JavaGet<CR>
+nmap <silent> <Leader>gs :JavaSet<CR>
+vmap <silent> <Leader>gs :JavaSet<CR>
+nmap <silent> <Leader>ga :JavaGetSet<CR>
+vmap <silent> <Leader>ga :JavaGetSet<CR>
+
+" refactor
+nmap <silent> <Leader>rn :JavaRename 
+nmap <silent> <Leader>rm :JavaMove 
+nmap <silent> <Leader>ru :RefactorUndo<CR>
+nmap <silent> <Leader>rp :RefactorUndoPeek<CR>
+nmap <silent> <Leader>rr :RefactorRedo<CR>
+
+" eclipse
+nmap <silent> <Leader>ef :!eclipse %<CR><CR>
 
 command -nargs=+ EjosOpenMaster :call g:EjosOpenMaster(<q-args>)
 command -nargs=+ EjosOpenSlave :call g:EjosOpenSlave(<q-args>)

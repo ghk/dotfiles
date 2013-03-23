@@ -72,7 +72,7 @@
 
 .notebook tab GtkLabel {
 	color: @theme_selected_fg_color;
-	text-shadow: 0px 1px @theme_selected_shadow_color;
+	text-shadow: 0 1 @theme_selected_shadow_color;
 }
 
 

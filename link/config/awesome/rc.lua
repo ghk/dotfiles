@@ -143,8 +143,8 @@ naughty.config.presets.critical.opacity    = 0.9
 
 tags = {
     names  = { "desk", "term", "mail", "im", "", "", "", "", "media" },
-    layouts = { layouts[2], layouts[3], 
-    layouts[2], layouts[1], layouts[1], layouts[3], layouts[3], layouts[3], layouts[1]},
+    layouts = { layouts[2], layouts[3], layouts[2], 
+    layouts[3], layouts[1], layouts[3], layouts[3], layouts[3], layouts[1]},
 }   
 
 for s = 1, screen.count() do
@@ -691,11 +691,21 @@ awful.rules.rules = {
     },
     { 
         rule = { class = "Pidgin" },
-        properties = { tag=tags[1][4] } 
+        properties = { tag=tags[1][4] },
+        callback = function(c)
+            if c.role ~= "conversation" then
+                awful.client.setslave(c)
+            end
+        end
     },
     { 
         rule = { class = "Skype" },
-        properties = { tag=tags[1][4] } 
+        properties = { tag=tags[1][4] }, 
+        callback = function(c)
+            if c.role ~= "ConversationsWindow" then
+                awful.client.setslave(c)
+            end
+        end
     },
     { 
         rule = { class = "banshee" },

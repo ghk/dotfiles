@@ -27,18 +27,34 @@ alias geclim="gvim --cmd 'let g:ejos_pack=\"eclim\"'"
 
 alias findn="find -name $ARGV"
 
+function tmux_pane
+    if test -n "$TMUX"
+        #/usr/bin/tmux send-keys C-a C-$argv
+        /usr/bin/tmux select-pane -$argv
+    end
+end
+
 function vi_mode_user
     bind \co 'prevd; commandline -f repaint'
-    bind \ck 'nextd; commandline -f repaint' #urvt mapped ci to ck
-    #bind \ci 'nextd; commandline -f repaint'
+    bind \ct 'nextd; commandline -f repaint' #urvt mapped ci to ct
+    bind \ch 'tmux_pane L'
+    bind \cj 'tmux_pane D'
+    bind \ck 'tmux_pane U'
+    bind \cl 'tmux_pane R'
+    bind \cd 'xdotool key --clearmodifiers Shift+Page_Down'
+    bind \cu 'xdotool key --clearmodifiers Shift+Page_Up'
+    bind -k f12 'echo ea'
+    bind \cm 'commandline -f execute; commandline -f repaint;'
     switch $argv[1]
         case g
         case normal
     end
+    #stty -icrnl
 end
 
 function fish_user_key_bindings
     vi_mode_insert
+    #stty -icrnl
 end
 
 #less color

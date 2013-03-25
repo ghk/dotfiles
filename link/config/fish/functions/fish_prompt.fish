@@ -38,6 +38,7 @@ function fish_prompt --description 'Write out the prompt'
     case '*'
 
         printf '%s' (powerline-shell $stat $vi_mode)
+        #stty -icrnl
 
     end
 end

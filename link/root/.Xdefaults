@@ -52,7 +52,7 @@ URxvt.perl-ext-common: default,matcher,clipboard
 URxvt.keysym.M-c:   perl:clipboard:copy
 URxvt.keysym.M-v:   perl:clipboard:paste
 URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
-URxvt.keysym.C-i: 
+URxvt.keysym.C-i: 
 URxvt.matcher.button: 1
 URxvt.urlLauncher: firefox
  

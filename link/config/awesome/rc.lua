@@ -9,6 +9,8 @@ require('couth.couth')
 require('couth.alsa')
 require("blingbling")
 require("ejos.tile")
+require "minigtk"
+require "keybinder"
 
 os.execute("fishd")
 
@@ -756,19 +758,43 @@ client.add_signal("manage", function (c, startup)
     end
 end)
 
-client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+minigtk.init()
+
+function binder_callback(keystring, xte_seq)
+    if xte_seq ~= nil then
+        xte_cmd = "xdotool key --clearmodifiers "..xte_seq
+        awful.util.spawn_with_shell(xte_cmd)
+    end
+end
+
+skype_binded = false
+
+
+client.add_signal("focus", function(c) 
+  c.border_color = beautiful.border_focus 
+  if c.class == "Skype" then
+      if not skype_binded then
+        keybinder.bind("<Control>W", binder_callback, nil)
+        skype_binded = true
+       end
+  else
+      if skype_binded then
+        keybinder.unbind("<Control>W")
+        skype_binded = false
+      end
+  end
+end)
+
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
 --{{--| Autostart |--------------------------------------------------------
-print("ea");
 
 run_once("compton")
-print("ea2");
 run_once("focused")
-print("ea3");
 run_once_differ("conky", 'conky -c "/home/ghk/.config/conky/conkyrc"')
 
 run_once_differ("nm-applet", "dbus-launch nm-applet --sm-disable")
+run_once_differ("evrouter", "evrouter /dev/input/event0 -c /home/ghk/.config/evrouter.conf")
 os.execute("/home/ghk/.local/pyenv/bin/single.py -c /home/ghk/.local/bin/awesome-mod-hint &")
 
 run_once("udisks-glue")
@@ -781,4 +807,6 @@ run_oncewa("dropbox start")
 --{{--|Gnome autostart
 
 os.execute("setxkbmap -option terminate:ctrl_alt_bksp &")
-os.execute("xmodmap ~/.xmodmaprc")
+os.execute("xmodmap ~/.config/xmodmaprc")
+os.execute("synclient TouchpadOff=0")
+

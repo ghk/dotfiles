@@ -1,0 +1,9 @@
+set gui=notabs
+set gui=nofolderlist
+set gui=nomail
+set gui=nostatus
+
+noremap e :echo<Space>
+noremap / <c-s-k>
+mmap <Space> :
+javascript commands.get("quit").action = window.CloseTabOrWindow

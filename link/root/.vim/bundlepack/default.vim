@@ -22,9 +22,12 @@ nmap <silent> <c-l> :call g:EjosWinMove("l")<CR>
 map <silent> <F1> :call g:EjosToggleTree()<CR>
 map <silent> <F2> :call g:EjosToggleTagbar()<CR>
 map <silent> <F3> :CtrlP<CR>
+
 map <silent> <C-\> :silent call g:EjosSetMaster()<CR>
+map <silent> <C-]> :silent call g:EjosSetFirstSlave()<CR>
 
 autocmd VimResized * call g:EjosResize() 
 autocmd WinLeave * call g:EjosPrepareMasterLeave() 
 
 let g:ctrlp_open_func = { 'files': 'g:CtrlPEjosOpen' }
+let g:SuperTabClosePreviewOnPopupClose = 1

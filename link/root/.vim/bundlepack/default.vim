@@ -25,5 +25,6 @@ map <silent> <F3> :CtrlP<CR>
 map <silent> <C-\> :silent call g:EjosSetMaster()<CR>
 
 autocmd VimResized * call g:EjosResize() 
+autocmd WinLeave * call g:EjosPrepareMasterLeave() 
 
 let g:ctrlp_open_func = { 'files': 'g:CtrlPEjosOpen' }

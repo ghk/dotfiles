@@ -83,7 +83,6 @@ EOF
 command proxy -nargs=1 :set! network.proxy.type=<args>
 
 set passkeys+=mail.google.com:'!#*+-./<C-Down><C-s><Enter>?INU[]acejklmnopqrsuvxyz',*a,*n,*r,*s,*t,*u,ga,gc,gd,gi,gl,gs,gt,yo
-set strictfocus+=mail.google.com:laissez-fair
 
 
 nmap <Space> :
@@ -93,7 +92,6 @@ nmap <F9> f
 nmap <F8> F
 nmap <F6> gT
 nmap <F7> gt
-nmap e :js!<CR> 
 
 imap <C-f> <C-t>
 cmap <C-f> <C-t>
@@ -118,3 +116,6 @@ cmap <A-l> <Right>
 
 imap <A-h> <Right>
 cmap <A-h> <Right>
+
+nmap C :js!<CR> 
+nmap -description "firebug toggle" c :firebug mode<CR>

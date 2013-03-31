@@ -15,7 +15,7 @@
         "tabs": [
             {
                 "class": "ViFileList", 
-                "path": "/home/ghk", 
+                "path": "/home/ghk/Workspace/java/eclipse/tpc-ohcis/public/plugins/bootstrap/js", 
                 "sort_ascending": true, 
                 "sort_column": 0
             }

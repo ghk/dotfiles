@@ -11,6 +11,7 @@ Bundle 'gmarik/vundle'
 
 "Bundle 'Lokaltog/vim-powerline'
 "let Powerline_symbols = 'fancy'
+
 set rtp+=~/.local/pyenv/powerline/powerline/bindings/vim
 
 Bundle 'sjl/gundo.vim'
@@ -139,6 +140,13 @@ noremap <silent><Leader>/ :nohls<CR>
 "clipboard register
 noremap <silent><Leader>x "*
 vnoremap <silent><Leader>x "+
+
+" s maps for inserting single character
+function! RepeatChar(char, count)
+    return repeat(a:char, a:count)
+endfunction
+nnoremap s :<C-U>exec "normal i".RepeatChar(nr2char(getchar()), v:count1)<CR>
+nnoremap S :<C-U>exec "normal a".RepeatChar(nr2char(getchar()), v:count1)<CR>
 
 " muahahah
 nmap <Space> :

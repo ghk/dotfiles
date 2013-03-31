@@ -10,9 +10,6 @@ end
 . ~/.config/fish/vi-mode.fish
 
 alias cl="command grc --colour=auto $ARGV"
-function tmux
-    set -l TERM xterm-256color; command tmux $ARGV;
-end
 
 alias ping="cl ping $ARGV"
 alias traceroute="cl traceroute $ARGV"

@@ -514,6 +514,8 @@ end
 
 root.buttons(awful.util.table.join(awful.button({ }, 3, function () mymainmenu:toggle() end)))
 
+touchpad_on = false
+
 --{{---| Key bindings |----------------------------------------------------
 
 globalkeys = awful.util.table.join(
@@ -617,7 +619,17 @@ globalkeys = awful.util.table.join(
     -- Other misc
     --
     awful.key({ }, "XF86Calculator",             function () awful.util.spawn_with_shell("gcalctool") end),
-    awful.key({ }, "XF86Sleep",                  function () awful.util.spawn_with_shell("sudo pm-hibernate") end)
+    awful.key({ }, "XF86Sleep",                  function () awful.util.spawn_with_shell("sudo pm-hibernate") end),
+    awful.key({ modkey,           }, "p",
+              function ()
+                if touchpad_on then
+                    os.execute("synclient TouchpadOff=1");
+                else
+                    os.execute("synclient TouchpadOff=0");
+                end
+                touchpad_on = not touchpad_on
+
+              end)
 )
 
 clientkeys = awful.util.table.join(
@@ -808,5 +820,5 @@ run_oncewa("dropbox start")
 
 os.execute("setxkbmap -option terminate:ctrl_alt_bksp &")
 os.execute("xmodmap ~/.config/xmodmaprc")
-os.execute("synclient TouchpadOff=0")
+os.execute("synclient TouchpadOff=1")
 

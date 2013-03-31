@@ -236,8 +236,7 @@
         extended: true,
         description: "firebug",
         bases: [modes.COMMAND],
-        input: true,
-        ownsBuffer: true
+        input: false,
     });
 
     group.mappings.add([modes.FIREBUG], ["i"],
@@ -332,7 +331,9 @@
     addMovementMapping("j", "down", 40);
     addMovementMapping("k", "up", 38);
     addMovementMapping("l", "right", 39);
-    addMovementMapping("c-d", "page down", 34);
-    addMovementMapping("c-u", "page up", 33);
+    addMovementMapping("<C-d>", "page down", 34);
+    addMovementMapping("<C-u>", "page up", 33);
+    addMovementMapping("gg", "home", 36);
+    addMovementMapping("G", "end", 35);
 
 }).call(this);

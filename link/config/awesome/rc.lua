@@ -9,6 +9,7 @@ require('couth.couth')
 require('couth.alsa')
 require("blingbling")
 require("ejos.tile")
+require('calendar2')
 require "minigtk"
 require "keybinder"
 
@@ -415,7 +416,6 @@ for s = 1, screen.count() do
     my_cal.bg = "#313131"
 
     -- Calendar widget to attach to the textclock
-    require('calendar2')
     calendar2.addCalendarToWidget(my_cal)
 
 
@@ -515,6 +515,7 @@ end
 root.buttons(awful.util.table.join(awful.button({ }, 3, function () mymainmenu:toggle() end)))
 
 touchpad_on = false
+touchpad_scroll_only = false
 
 --{{---| Key bindings |----------------------------------------------------
 
@@ -628,6 +629,16 @@ globalkeys = awful.util.table.join(
                     os.execute("synclient TouchpadOff=0");
                 end
                 touchpad_on = not touchpad_on
+
+              end),
+    awful.key({ modkey,  "Control"         }, "p",
+              function ()
+                if touchpad_scroll_only then
+                    awful.util.spawn_with_shell("awesome_set_pad noscroll")
+                else
+                    awful.util.spawn_with_shell("awesome_set_pad scroll")
+                end
+                touchpad_scroll_only = not touchpad_scroll_only
 
               end)
 )
@@ -784,6 +795,10 @@ skype_binded = false
 
 client.add_signal("focus", function(c) 
   c.border_color = beautiful.border_focus 
+  if touchpad_scroll_only then
+      os.execute("xdotool mousemove -w "..c.window.." 0 30")
+  end
+
   if c.class == "Skype" then
       if not skype_binded then
         keybinder.bind("<Control>W", binder_callback, nil)
@@ -807,7 +822,7 @@ run_once_differ("conky", 'conky -c "/home/ghk/.config/conky/conkyrc"')
 
 run_once_differ("nm-applet", "dbus-launch nm-applet --sm-disable")
 run_once_differ("evrouter", "evrouter /dev/input/event0 -c /home/ghk/.config/evrouter.conf")
-os.execute("/home/ghk/.local/pyenv/bin/single.py -c /home/ghk/.local/bin/awesome-mod-hint &")
+os.execute("/home/ghk/.local/pyenv/bin/single.py -c /home/ghk/.local/bin/awesome_mod_hint &")
 
 run_once("udisks-glue")
 -- os.execute("sudo /etc/init.d/dcron start &")
@@ -820,5 +835,5 @@ run_oncewa("dropbox start")
 
 os.execute("setxkbmap -option terminate:ctrl_alt_bksp &")
 os.execute("xmodmap ~/.config/xmodmaprc")
-os.execute("synclient TouchpadOff=1")
-
+--awful.util.spawn_with_shell("awesome_set_pad scroll")
+os.execute("synclient TouchpadOff=1");

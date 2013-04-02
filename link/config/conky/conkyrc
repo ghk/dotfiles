@@ -68,7 +68,12 @@ ${voffset 245}
 
 ${color2 }${font Consolas:size=14}${offset 70}${execi 1800 date +%^B | cut -c1}${execi 1800 date +%B | cut -c2-} ${time (%m)}
 
-${color1}${font Consolas:size=14}${execpi 600 DJS=`date +%_d`; cal -h | sed '1d' | sed s/"$DJS"/'${color4}'"$DJS"'${color1}'/ | sed 's/^/${offset 70}/' }$font
+${color1}${font Consolas:size=14}${execpi 600 DJS=`date +%_d`; cal -h | 
+sed '1d' | 
+sed s/"\ $DJS\ "/'${color4}'"\ $DJS\ "'${color1}'/ |
+sed s/"^$DJS\ "/'${color4}'"$DJS\ "'${color1}'/ |
+sed s/"\ $DJS\$"/'${color4}'"$DJS\ "'${color1}'/ |
+sed 's/^/${offset 70}/' }$font
 
 ${voffset 10}
 

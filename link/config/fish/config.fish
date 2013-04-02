@@ -13,6 +13,7 @@ alias cl="command grc --colour=auto $ARGV"
 
 alias ping="cl ping $ARGV"
 alias traceroute="cl traceroute $ARGV"
+alias guestdo="sudo -u guest $ARGV"
 alias make="cl make $ARGV"
 alias netstat="cl netstat $ARGV"
 alias gcc="cl gcc $ARGV"

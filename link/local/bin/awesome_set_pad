@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ $1 = "scroll" ]; then
+    xinput --set-prop 'SynPS/2 Synaptics TouchPad'  'Synaptics Edge Scrolling' 1 1 0
+    xinput --set-prop 'SynPS/2 Synaptics TouchPad'  'Synaptics Edges' 0 0 0 4500
+    xinput --set-prop 'SynPS/2 Synaptics TouchPad'  'Synaptics Scrolling Distance' 250 250
+else
+    xinput --set-prop 'SynPS/2 Synaptics TouchPad'  'Synaptics Edge Scrolling' 0 0 0
+    xinput --set-prop 'SynPS/2 Synaptics TouchPad'  'Synaptics Edges' 1766 5386 1640 4500
+    xinput --set-prop 'SynPS/2 Synaptics TouchPad'  'Synaptics Scrolling Distance' 107 107
+fi

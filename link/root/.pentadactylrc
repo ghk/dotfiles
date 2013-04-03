@@ -119,3 +119,4 @@ cmap <A-h> <Right>
 
 nmap C :js!<CR> 
 nmap -description "firebug toggle" c :firebug mode<CR>
+

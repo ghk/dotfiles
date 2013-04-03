@@ -1,0 +1,16 @@
+fbmap gt "firebug tab-right"
+fbmap gT "firebug tab-left"
+fbmap q "firebug close"
+fbmap $ "firebug start-command 'firebug inspect '"
+fbmap , "firebug inspect-previous"
+fbmap ; "firebug inspect-next"
+
+fbmap : "firebug start-command ''"
+fbmap <Space> "firebug start-command ''"
+
+
+fbmap i "firebug insert"
+fbmap o "firebug open"
+fbmap d "firebug delete"
+fbmap / "firebug search"
+fbmap y "firebug yank"

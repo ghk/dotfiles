@@ -59,6 +59,10 @@
                 return fb.Search.search(text.join(' '), fb.currentContext);
             }
         },
+        open: function(){},
+        getYankText: function(){
+            return null;
+        },
     });
 
     function focusPanel(panel, focusSelector){
@@ -87,9 +91,20 @@
             "gl": "layout",
             "gd": "domSide",
         },
-        insert: function(panel){
+        insert: function(){
+            var panel = getActivePanel();
             modes.push(modes.INSERT);
             panel.editNode(panel.selection);
+        },
+        open: function(){
+            var element = getActiveElement(getActivePanel());
+            simulateKeyEvent(element, 39);
+        },
+        getYankText: function(){
+            var panel = getActivePanel();
+            var cloned = panel.selection.cloneNode();
+            var div = content.document.createElement("div");
+            return $(div).append(cloned).html();
         },
     });
     var StylesheetPanel = Class("StylesheetPanel", Panel, {
@@ -108,6 +123,19 @@
             }
             return el
         },
+        getYankText: function(){
+            var panel = getActivePanel();
+            var element = panel.document.activeElement;
+            if(element){
+                var $element = $(element);
+                if($element.hasClass("cssHead")){
+                    return $element.parent().text();
+                } else if ($element.hasClass("cssProp")){
+                    return $element.text();
+                }
+            }
+            return null;
+        },
     });
     var ScriptPanel = Class("ScriptPanel", Panel, {
         sideTabs : {
@@ -117,6 +145,7 @@
         },
     });
     var DomPanel = Class("DomPanel", Panel, {
+        focusSelector : ".objectBox[role], .objectLink[role]",
         insert: function(){
             modes.push(modes.INSERT);
             var panel = getActivePanel();
@@ -137,8 +166,8 @@
 
     var NetPanel = Class("NetPanel", Panel, {
     });
-    var ComputedPanel = Class("ComputedPanel", Panel, {
-        focusSelector : ".editGroup",
+    var LayoutPanel = Class("LayoutPanel", Panel, {
+        focusSelector : ".focusGroup",
     });
     var CookiesPanel = NetPanel;
 
@@ -156,14 +185,14 @@
         side: {
             css: new StylesheetPanel(),
             domSide: new DomPanel(),
-            layout: new Panel(),
+            layout: new LayoutPanel(),
             computed: new Panel(),
             callstack: new Panel(),
             watches: new Panel(),
             breakpoints: new Panel(),
         },
         get active() {
-            var panel = getSelectedPanel();
+            var panel = getActivePanel();
             if (fb.chrome.getSelectedSidePanel().document.hasFocus()){
                 return this["side"][panel.name];
             }
@@ -194,27 +223,39 @@
             inspect: "toggle the firebug element inspector",
             behave: "use Behave.js for console (like auto-pairs)"
         },
-        open: function() {
-            if (!chrome.isOpen()) {
-                return fb.toggleBar(true, 'console');
-            }
-        },
         close: function() {
-            if (chrome.isOpen()) {
-                return fb.toggleBar();
-            }
-        },
-        toggle: function() {
-            return fb.toggleBar();
-        },
-        disable: function() {
+            modes.pop();
             return fb.closeFirebug(true);
         },
-        inspect: function() {
+        hide: function() {
+        },
+        inspect: function(selector, index) {
             if (!fb.currentContext) {
                 fb.toggleBar(true);
             }
-            return fb.Inspector.toggleInspecting(fb.currentContext);
+            log(index);
+            if(!index)
+                index = 0;
+            var el = $(selector, content.document)[index];
+            if(el){
+                this.tab("html");
+                content.fbInspectLastIndex = index;
+                content.fbInspectLastSelector = selector;
+                getActivePanel().selection = el;
+                getActivePanel().updateSelection(el);
+            }
+        },
+        "inspect-previous": function(){
+            if(content.fbInspectLastSelector){
+                this.inspect(content.fbInspectLastSelector, 
+                        content.fbInspectLastIndex + 1);
+            }
+        },
+        "inspect-next": function(){
+            if(content.fbInspectLastSelector){
+                this.inspect(content.fbInspectLastSelector, 
+                        content.fbInspectLastIndex - 1);
+            }
         },
         behave: function() {
             if (this._editor) {
@@ -226,44 +267,6 @@
                 return this._editor = new dactyl.plugins.Behave({
                     textarea: cmd.getCommandEditor().editor.textBox
                 });
-            }
-        },
-        console: function() {
-            var cmEditor, cmLine;
-            if (!chrome.isOpen()) {
-                this.open();
-            }
-            chrome.switchToPanel(fb.currentContext, "console");
-            cmLine = cmd.getSingleRowCommandLine();
-            cmEditor = cmd.getCommandEditor();
-            if (fb.commandEditor) {
-                if (cmEditor.focus) {
-                    return cmEditor.focus();
-                } else {
-                    return cmEditor.select();
-                }
-            } else {
-                return cmLine.select();
-            }
-        },
-        multiline: function() {
-            if (chrome.isOpen()) {
-                return cmd.toggleMultiLine(true);
-            }
-        },
-        "toggle-console": function() {
-            if (chrome.isOpen()) {
-                return cmd.toggleMultiLine();
-            }
-        },
-        clear: function() {
-            if (chrome.isOpen()) {
-                return fb.Console.clear();
-            }
-        },
-        run: function() {
-            if (chrome.isOpen()) {
-                return cmd.enter(fb.currentContext);
             }
         },
         'tab': function(panelName) {
@@ -298,6 +301,21 @@
         'search': function() {
             panels.active.search();
         },
+        'delete': function() {
+            panels.active.del();
+        },
+        'insert': function() {
+            panels.active.insert();
+        },
+        'open': function() {
+            panels.active.open();
+        },
+        'yank': function() {
+            var yankText = panels.active.getYankText();
+            if(yankText != null){
+                dactyl.clipboardWrite(yankText, true);
+            }
+        },
         'mode': function() {
             modes.push(modes.FIREBUG);
             if (!chrome.isOpen()) {
@@ -306,6 +324,9 @@
         },
         'keypress': function(keycode){
             simulateKeyEvent(getActiveElement(getActivePanel()), keycode);
+        },
+        'start-command': function(text){
+            CommandExMode().open(text);
         },
         _initialize: function() {
             fb = global.Firebug;
@@ -323,24 +344,6 @@
         input: false,
     });
 
-    group.mappings.add([modes.FIREBUG], ["i"],
-            "Leave Autocomplete or Menu mode",
-    function () { 
-        panels.active.insert();
-    });
-
-    group.mappings.add([modes.FIREBUG], ["d"],
-            "Leave Autocomplete or Menu mode",
-    function () { 
-        panels.active.del();
-    });
-
-    group.mappings.add([modes.FIREBUG], ["/"],
-            "Leave Autocomplete or Menu mode",
-    function () { 
-        panels.active.search();
-    });
-
     var tabs = [
         "console", "html", "stylesheet", "script", "dom", "net", "cookies"
         ];
@@ -352,16 +355,6 @@
         firebug.tab(tabs[count-1]);
     }, {count: true});
 
-    group.mappings.add([modes.FIREBUG], ["gt"],
-            "Leave Autocomplete or Menu mode",
-    function () { 
-        firebug["tab-right"]();
-    });
-    group.mappings.add([modes.FIREBUG], ["gT"],
-            "Leave Autocomplete or Menu mode",
-    function () { 
-        firebug["tab-left"]();
-    });
 
     var addTabSideMapping = function (key){
         group.mappings.add([modes.FIREBUG], [key],
@@ -384,26 +377,6 @@
         addTabSideMapping(key);
     }
 
-    group.mappings.add([modes.FIREBUG], ["q"],
-            "Leave Autocomplete or Menu mode",
-    function () { 
-        modes.pop();
-        firebug.disable();
-    });
-
-    group.mappings.add([modes.FIREBUG], ["s"],
-            "Leave Autocomplete or Menu mode",
-    function () { 
-        log(Firebug.chrome.getSelectedSidePanel().document.hasFocus());
-    });
-
-    group.mappings.add([modes.FIREBUG], ["m"],
-            "Leave Autocomplete or Menu mode",
-    function () { 
-        log(Firebug.chrome.getSelectedPanel().document.hasFocus());
-    });
-
-
     var addMovementMapping = function(key, dir, keycode){
         group.mappings.add([modes.FIREBUG], [key],
                 "Leave Autocomplete or Menu mode",
@@ -421,6 +394,15 @@
     addMovementMapping("gg", "home", 36);
     addMovementMapping("G", "end", 35);
 
+    group.commands.add(['fbmap'], "firebug map", function(args) {
+        group.mappings.add([modes.FIREBUG], [args[0]],
+                "",
+        function () { 
+            dactyl.execute(args[1]);
+        });
+        var command, index, _i, _len, _results;
+    }, {});
+    
 
     group.commands.add(['firebug', 'fbpc'], "firebug-pentadactyl (version " + firebug.info.version + ")", function(args) {
         var command, index, _i, _len, _results;
@@ -450,20 +432,7 @@
             })();
         }
     });
+    io.source("~/.pentadactyl/fbmap");
 
-    group.options.add(["fbliverun"], "run script on blur firebug console", "boolean", false, {
-        setter: function(value) {
-            var cmEditor;
-            if (!cmd) {
-                firebug._initialize();
-            }
-            cmEditor = cmd.getCommandEditor();
-            if (value) {
-                return cmEditor.editor.addEventListener('blur', firebug.run);
-            } else if (!value) {
-                return cmEditor.editor.removeEventListener('blur', firebug.run);
-            }
-        }
-    });
 
 })(this);

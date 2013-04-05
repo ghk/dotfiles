@@ -61,11 +61,16 @@
         },
         open: function(){},
         getYankText: function(){
+            var panel = getActivePanel();
+            var element = panel.document.activeElement;
+            if(element){
+                return $(element).text();
+            }
             return null;
         },
     });
 
-    function focusPanel(panel, focusSelector){
+    function focusPanel(panel, focusSelector, simulateClick){
         log(focusSelector);
         panel.panelNode.focus();
         if(focusSelector){
@@ -73,10 +78,12 @@
             log($els.length);
             if($els.length){
                 $els[0].focus();
-                var simulate = function(){
-                    simulateClickEvent($els[0]);
-                };
-                setTimeout(simulate, 0);
+                if(simulateClick){
+                    var simulate = function(){
+                        simulateClickEvent($els[0]);
+                    };
+                    setTimeout(simulate, 0);
+                }
             }
         } 
     }
@@ -165,6 +172,12 @@
     });
 
     var NetPanel = Class("NetPanel", Panel, {
+        focusSelector : ".netRow.hasHeaders",
+        focusClick: true,
+        open: function(){
+            var element = getActiveElement(getActivePanel());
+            simulateKeyEvent(element, 13);
+        },
     });
     var LayoutPanel = Class("LayoutPanel", Panel, {
         focusSelector : ".focusGroup",
@@ -193,7 +206,8 @@
         },
         get active() {
             var panel = getActivePanel();
-            if (fb.chrome.getSelectedSidePanel().document.hasFocus()){
+            var sidePanel = fb.chrome.getSelectedSidePanel();
+            if (sidePanel && sidePanel.document.hasFocus()){
                 return this["side"][panel.name];
             }
             return this["main"][panel.name];
@@ -248,13 +262,13 @@
         "inspect-previous": function(){
             if(content.fbInspectLastSelector){
                 this.inspect(content.fbInspectLastSelector, 
-                        content.fbInspectLastIndex + 1);
+                        content.fbInspectLastIndex - 1);
             }
         },
         "inspect-next": function(){
             if(content.fbInspectLastSelector){
                 this.inspect(content.fbInspectLastSelector, 
-                        content.fbInspectLastIndex - 1);
+                        content.fbInspectLastIndex + 1);
             }
         },
         behave: function() {
@@ -275,27 +289,27 @@
             }
             if (chrome.isOpen()) {
                 chrome.navigate(null, panelName);
-                focusPanel(chrome.getSelectedPanel(), panels.main[panelName].focusSelector);
+                focusPanel(chrome.getSelectedPanel(), panels.main[panelName].focusSelector, panels.main[panelName].focusClick);
             }
         },
         'tab-side': function(panelName) {
             if (chrome.isOpen()) {
                 chrome.selectSidePanel(panelName);
-                focusPanel(chrome.getSelectedSidePanel(), panels.side[panelName].focusSelector);
+                focusPanel(chrome.getSelectedSidePanel(), panels.side[panelName].focusSelector, panels.side[panelName].focusClick);
             }
         },
         'tab-right': function() {
             if (chrome.isOpen()) {
                 chrome.gotoSiblingTab(true);
                 var panelName = chrome.getSelectedPanel().name;
-                focusPanel(chrome.getSelectedPanel(), panels.main[panelName].focusSelector);
+                focusPanel(chrome.getSelectedPanel(), panels.main[panelName].focusSelector, panels.main[panelName].focusClick);
             }
         },
         'tab-left': function() {
             if (chrome.isOpen()) {
                 chrome.gotoSiblingTab();
                 var panelName = chrome.getSelectedPanel().name;
-                focusPanel(chrome.getSelectedPanel(), panels.main[panelName].focusSelector);
+                focusPanel(chrome.getSelectedPanel(), panels.main[panelName].focusSelector, panels.main[panelName].focusClick);
             }
         },
         'search': function() {
@@ -309,6 +323,21 @@
         },
         'open': function() {
             panels.active.open();
+        },
+        'position': function(value) {
+            chrome.setPosition(value);
+        },
+        'orient': function(value) {
+            chrome.toggleOrient(value);
+        },
+        'toggle_view': function(value){
+            if(chrome.framePosition == "bottom"){
+                this.position("left");
+                this.orient("bottom");
+            } else {
+                this.position("bottom");
+                this.orient("bottom");
+            }
         },
         'yank': function() {
             var yankText = panels.active.getYankText();

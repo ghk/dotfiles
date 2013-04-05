@@ -1,6 +1,6 @@
 set guioptions+=n
 colorscheme solarized-dark
-set hintkeys=weioasdjkl
+set hintkeys=abcdefghijklmnopqrstuvwxyz
 
 hi -a Hint font-size: 10pt !important; 
 hi FontFixed -a font-family: Consolas !important; font-size: 11px !important;

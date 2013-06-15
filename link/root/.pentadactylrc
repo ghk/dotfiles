@@ -3,7 +3,7 @@ colorscheme solarized-dark
 set hintkeys=abcdefghijklmnopqrstuvwxyz
 
 hi -a Hint font-size: 10pt !important; 
-hi FontFixed -a font-family: Consolas !important; font-size: 11px !important;
+hi FontFixed -a font-family: Consolas !important; font-size: 12px !important;
 hi -a Hint font-weight: normal !important; 
 hi -a Hint font-family: "Helvetica LT" !important; 
 hi -a Hint text-transform: uppercase;
@@ -84,6 +84,8 @@ command proxy -nargs=1 :set! network.proxy.type=<args>
 
 set passkeys+=mail.google.com:'!#*+-./<C-Down><C-s><Enter>?INU[]acejklmnopqrsuvxyz',*a,*n,*r,*s,*t,*u,ga,gc,gd,gi,gl,gs,gt,yo
 
+map -builtin <C-o> H
+map -builtin <C-i> L
 
 nmap <Space> :
 nmap <F10> <C-d>
@@ -92,9 +94,6 @@ nmap <F9> f
 nmap <F8> F
 nmap <F6> gT
 nmap <F7> gt
-
-imap <C-f> <C-t>
-cmap <C-f> <C-t>
 
 imap <A-b> <C-Left>
 cmap <A-b> <C-Left>

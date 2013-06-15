@@ -12,10 +12,14 @@ fbmap t "firebug start-command 'tabopen '"
 fbmap : "firebug start-command ''"
 fbmap <Space> "firebug start-command ''"
 
+fbmap gm "firebug focus-main"
 
 fbmap i "firebug insert"
 fbmap o "firebug open"
 fbmap d "firebug delete"
 fbmap / "firebug search"
 fbmap y "firebug yank"
-fbmap <C-Space> "firebug toggle_view"
+fbmap <C-Space> "firebug toggle-view"
+
+fbmap <Escape> "firebug mode-off"
+fbmap <C-[> "firebug mode-off"

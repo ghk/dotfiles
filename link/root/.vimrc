@@ -10,11 +10,12 @@ set novisualbell
 Bundle 'gmarik/vundle'
 
 "Bundle 'Lokaltog/vim-powerline'
-"let Powerline_symbols = 'fancy'
+let Powerline_symbols = 'fancy'
 
-set rtp+=~/.local/pyenv/powerline/powerline/bindings/vim
+"set rtp+=~/.local/pyenv/powerline/powerline/bindings/vim
 
 Bundle 'sjl/gundo.vim'
+Bundle 'Lokaltog/vim-powerline'
 Bundle 'Lokaltog/vim-easymotion'
 
 " syntax

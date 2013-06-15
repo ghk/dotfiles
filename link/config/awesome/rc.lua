@@ -407,12 +407,13 @@ for s = 1, screen.count() do
     baticon = widget ({type = "imagebox" })
     baticon.image = image(beautiful.widget_battery)
     batwidget = widget({ type = "textbox" })
-    vicious.register( batwidget, vicious.widgets.bat, '<span background="'..beautiful.black..'"> $1$2% </span>', 1, "BAT0" )
+    vicious.register( batwidget, vicious.widgets.bat, '$1$2%', 1, "BAT0" )
+    --batwidget.bg = beautiful.acc4
     --{{---| Net widget |--------------------------------------------------
 
 
     --{{---| Calendar widget |---------------------------------------------
-    my_cal = awful.widget.textclock({ align = "right"}, '%a, %d %b %Y,%H:%M:%S')
+    my_cal = awful.widget.textclock({ align = "right"}, '%a, %d %b %Y,%H:%M:%S',1)
     my_cal.bg = "#313131"
 
     -- Calendar widget to attach to the textclock

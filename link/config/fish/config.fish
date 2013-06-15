@@ -43,6 +43,7 @@ function vi_mode_user
     bind \cu 'xdotool key --clearmodifiers Shift+Page_Up'
     bind -k f12 'echo ea'
     bind \cm 'commandline -f execute; commandline -f repaint;'
+	bind \ce fish_command_editor
     switch $argv[1]
         case g
         case normal

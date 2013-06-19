@@ -351,7 +351,6 @@ if __name__ == '__main__':
     arg_parser.add_argument('--mode', action='store', default='patched')
     arg_parser.add_argument('--shell', action='store', default='bare')
     arg_parser.add_argument('prev_error')
-    arg_parser.add_argument('vi_mode')
     args = arg_parser.parse_args()
 
     p = Powerline(mode=args.mode, shell=args.shell)
@@ -359,7 +358,6 @@ if __name__ == '__main__':
     add_virtual_env_segment(p, cwd)
     #p.append(Segment(p, ' \\u ', 250, 240))
     #p.append(Segment(p, ' \\h ', 250, 238))
-    add_mode_segment(p, args.vi_mode)
     add_cwd_segment(p, cwd, 4, args.cwd_only)
     add_repo_segment(p, cwd)
     add_root_indicator(p, args.prev_error)

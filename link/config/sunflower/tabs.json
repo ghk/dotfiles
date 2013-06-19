@@ -15,7 +15,7 @@
         "tabs": [
             {
                 "class": "ViFileList", 
-                "path": "/home/ghk/Dropbox", 
+                "path": "/home/ghk", 
                 "sort_ascending": true, 
                 "sort_column": 0
             }

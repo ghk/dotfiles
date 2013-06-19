@@ -1,6 +1,11 @@
 function fish_prompt --description 'Write out the prompt'
 	
     set stat $status
+    set sep \u2b80
+    set sep_thin \u2b81
+
+    set mode_start (set_color -b blue)
+    set mode_end (set_color blue)
 
     # Just calculate these once, to save a few cycles when displaying the prompt
     if not set -q __fish_prompt_hostname
@@ -21,6 +26,16 @@ function fish_prompt --description 'Write out the prompt'
         set __fish_color_status (set_color -o red)
     end
 
+    switch $vi_mode
+    case d
+        set mode_start (set_color -b red)
+        set mode_end (set_color red)
+    case n
+        set mode_start (set_color -b green)
+        set mode_end (set_color green)
+    end
+        
+
     switch $USER
 
     case root
@@ -37,7 +52,8 @@ function fish_prompt --description 'Write out the prompt'
 
     case '*'
 
-        printf '%s' (powerline-shell $stat $vi_mode)
+        printf '%s %s %s%s%s' $mode_start $vi_mode (set_color -b 433) $mode_end $sep 
+        printf '%s' (/home/ghk/testc/powerli $stat)
         #stty -icrnl
 
     end

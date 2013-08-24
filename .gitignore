@@ -4,6 +4,7 @@ link/config/fish/fishd.*
 link/config/fish/.fuse*
 
 link/config/ranger/history
+link/config/ranger/bookmarks
 
 link/root/.PyCharm20/system
 link/root/.PyCharm20/config/*.key

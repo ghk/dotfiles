@@ -1,5 +1,6 @@
 function fish_prompt --description 'Write out the prompt'
 	
+    #set vi_mode i
     set stat $status
     set sep \u2b80
     set sep_thin \u2b81

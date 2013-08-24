@@ -23,7 +23,8 @@ acc6 = "#2aa198"
 
 theme = {}
 
-theme.wallpaper_cmd = { "awsetbg -t ".. themes_dir .."/powerarrow/wallpapers/w.png" }
+--theme.wallpaper_cmd = { "awsetbg -t ".. themes_dir .."/powerarrow/wallpapers/w.png" }
+theme.wallpaper_cmd = { "awsetbg -c /home/ghk/Pictures/moon.jpg"}
 
 theme.acc1 = acc1
 theme.acc2 = acc2

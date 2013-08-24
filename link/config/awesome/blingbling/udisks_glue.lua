@@ -38,6 +38,12 @@ local function unmounted_submenu(ud_menu,a_device)
   return my_submenu
 end
 
+local function unmount_multiple_partitions(ud_menu, mount_points)
+  for _,m in ipairs(mount_points) do
+      awful.util.pread(udisks_send(ud_menu, "unmount", m))
+  end
+end
+
 local function generate_menu(ud_menu)
 --all_devices={device_name={partition_1,partition_2}
 --devices_type={device_name=Usb or Cdrom}
@@ -55,16 +61,19 @@ local function generate_menu(ud_menu)
       end
       local check_remain_mounted_partition =0
       my_submenu={}
+      local mounted_partitions = {}
       for j,x in ipairs(v) do
         if data[ud_menu].partition_state[x] == "mounted" then
           check_remain_mounted_partition = 1
           table.insert(my_submenu,{x, mounted_submenu(ud_menu, x), data[ud_menu][device_type.."_icon"]})
+          table.insert(mounted_partitions,x)
         else
           table.insert(my_submenu,{x, unmounted_submenu(ud_menu, x), data[ud_menu][device_type.."_icon"]})
         end
       end
       if check_remain_mounted_partition == 1 then
-        table.insert(my_submenu,{"Can\'t "..action, {{k .." busy"}}, data[ud_menu][action.."_icon"]})
+        table.insert(my_submenu,{"unmount all", unmount_multiple_partitions(ud_menu, mounted_partitions ), data[ud_menu]["umount_icon"]})
+        --table.insert(my_submenu,{"Can\'t "..action, {{k .." busy"}}, data[ud_menu][action.."_icon"]})
       else
         table.insert(my_submenu,{action, udisks_send(ud_menu, action, k), data[ud_menu][action.."_icon"]})
       end
@@ -125,14 +134,14 @@ function mount_device(ud_menu,device, mount_point, device_type)
   data[ud_menu].partition_state[device]="mounted"
   data[ud_menu].menu:hide()  
   data[ud_menu].menu_visible = "false"
-  naughty.notify({title = device_type..":", text =device .. " mounted on" .. mount_point, timeout = 3})
+  naughty.notify({title = device_type..":", text =device .. " mounted on" .. mount_point, timeout = 10})
 end
 
 function unmount_device(ud_menu, device, mount_point, device_type)
   data[ud_menu].partition_state[device]="unmounted"
   data[ud_menu].menu:hide()  
   data[ud_menu].menu_visible = "false"
-  naughty.notify({title = device_type..":", text = device .." unmounted", timeout = 3})
+  naughty.notify({title = device_type..":", text = device .." unmounted", timeout = 10})
 end
 
 function remove_device(ud_menu, device, mount_point, device_type )
@@ -158,7 +167,7 @@ function remove_device(ud_menu, device, mount_point, device_type )
   end
   data[ud_menu].menu:hide()  
   data[ud_menu].menu_visible = "false"
-  naughty.notify({title = device_type ..":", text = device .." removed", timeout = 3})
+  naughty.notify({title = device_type ..":", text = device .." removed", timeout = 10})
 end
 
 ---Set the mount icon

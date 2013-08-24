@@ -17,13 +17,13 @@ end
 
 local processpopup = nil
 local processstats = nil
-local proc_offset = 35
+local proc_offset = 25
 
 local function hide_process_info()
   if processpopup ~= nil then
     naughty.destroy(processpopup)
     processpopup = nil
-    proc_offset = 35
+    proc_offset = 25
   end
 end
 local function show_process_info(inc_proc_offset, title_color,user_color, root_color)
@@ -82,7 +82,7 @@ mywidget:buttons(awful.util.table.join(
 end
 local netpopup = nil
 local function get_netinfo( my_title_color, my_established_color, my_listen_color)
-  str=awful.util.pread('sudo /bin/netstat -pa -u -t | grep -v TIME_WAIT')
+  str=awful.util.pread('/bin/netstat -pa -u -t | grep -v TIME_WAIT')
   str=colorize(str,"Proto", my_title_color)
   str=colorize(str,'Recv%XQ', my_title_color)
   str=colorize(str,"Send%XQ", my_title_color)

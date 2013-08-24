@@ -1,2 +1,3 @@
 #!/usr/local/bin/fish
-wine "C:\\Program Files\\Microsoft Office\\Office12\\VISIO.EXE" (winepath -w $argv)
+set -x WINEPREFIX $HOME/.wine-visio
+wine "C:\\Program Files\\Microsoft Office\\Office14\\VISIO.EXE" (winepath -w $argv)

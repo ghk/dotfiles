@@ -1,2 +1,3 @@
 #!/usr/local/bin/fish
-wine "C:\\Program Files\\Microsoft Office\\Office12\\EXCEL.EXE" (winepath -w $argv)
+set -x WINEPREFIX $HOME/.wine-office
+wine "C:\\Program Files\\Microsoft Office\\Office14\\EXCEL.EXE" (winepath -w $argv)

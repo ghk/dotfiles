@@ -35,9 +35,9 @@ if not couth.CONFIG then
 
 		-- The font to use for notifications. You should use a mono-space font so
 		-- the columns are evenly aligned.
-    NOTIFIER_FONT = 'fixed 12',
+    NOTIFIER_FONT = 'mono 22',
     NOTIFIER_POSITION = 'top_right',
-    NOTIFIER_TIMEOUT = 1,
+    NOTIFIER_TIMEOUT = 5,
 
   } 
 end

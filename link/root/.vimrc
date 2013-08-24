@@ -9,13 +9,7 @@ set novisualbell
 
 Bundle 'gmarik/vundle'
 
-"Bundle 'Lokaltog/vim-powerline'
-let Powerline_symbols = 'fancy'
-
-"set rtp+=~/.local/pyenv/powerline/powerline/bindings/vim
-
 Bundle 'sjl/gundo.vim'
-Bundle 'Lokaltog/vim-powerline'
 Bundle 'Lokaltog/vim-easymotion'
 
 " syntax
@@ -72,15 +66,20 @@ set smartcase
 let &colorcolumn=80
 
 
-let g:solarized_termtrans=1
-let g:solarized_contrast="high"
-let &t_Co=256
-
 set title
 syntax on
-set background=dark
-let base16colorspace=256 
-colorscheme solarized
+
+if $EGOZ_SCHEME == "white"
+    colorscheme default
+else
+    let g:solarized_termtrans=1
+    let g:solarized_contrast="high"
+    let &t_Co=256
+    set background=dark
+    let base16colorspace=256 
+    colorscheme solarized
+    cmap w <S-Right>
+endif
 
 if has("gui_running")
     set guifont=Consolas\ 10
@@ -153,6 +152,7 @@ nnoremap S :<C-U>exec "normal a".RepeatChar(nr2char(getchar()), v:count1)<CR>
 nmap <Space> :
 vmap <Space> :
 cmap w!! %!sudo tee > /dev/null %
+command -nargs=1 Fsize silent !fsize <f-args>
 
 
 function! g:EjosLoadPack(packname)
@@ -164,3 +164,4 @@ if exists("g:ejos_pack")
     let s:packname = g:ejos_pack
 endif
 call g:EjosLoadPack(s:packname)
+

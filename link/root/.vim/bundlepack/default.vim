@@ -1,8 +1,14 @@
+let Powerline_symbols = 'fancy'
+"Bundle 'Lokaltog/vim-powerline'
+
+"set rtp+=~/.local/pyenv/powerline/powerline/bindings/vim
+
 Bundle 'ghk/ejoswin'
 Bundle 'ghk/tagbar'
 Bundle 'kien/ctrlp.vim'
 Bundle 'SirVer/ultisnips'
 Bundle 'tpope/vim-fugitive'
+Bundle 'Lokaltog/vim-powerline'
 Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/nerdcommenter'

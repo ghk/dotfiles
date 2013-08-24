@@ -105,82 +105,72 @@ URxvt.pointerBlank: true
 *color15: #fdf6e3
 *backgroundPixmap: /home/ghk/.config/terminator/w2.png\;style=root-tiled
 
+bit*backgroundPixmap: /home/ghk/.config/terminator/w.png\;style=root-tiled
 
-white*foreground: #303030
-white*background: #f5f5f5
-white*cursorColor: #404040
-white*color0: #202020
-white*color1: #ac4142
-white*color2: #90a959
-white*color3: #f4bf75
-white*color4: #6a9fb5
-white*color5: #8f5536
-white*color6: #75b5aa
-white*color7: #e0e0e0
-white*color8: #151515
-white*color9: #d28445
-white*color10: #202020
-white*color11: #505050
-white*color12: #b0b0b0
-white*color13: #aa759f
-white*color14: #d0d0d0
-white*color15: #f5f5f5
 
-white*backgroundPixmap: /home/ghk/.config/terminator/w.png\;style=root-tiled
+! --- ~/.Xresources ------------------------------------------------------------
+! ------------------------------------------------------------------------------
+! --- generated with 4bit Terminal Color Scheme Designer -----------------------
+! ------------------------------------------------------------------------------
+! --- http://ciembor.github.com/4bit -------------------------------------------
+! ------------------------------------------------------------------------------
 
-gray*background: #333333
-gray*foreground: #ffffd7
-gray*color0: #333333
-gray*color8: #666666
-gray*color1: #d15517
-gray*color9: #d11723
-gray*color2: #36b217
-gray*color10: #00d56a
-gray*color3: #d1b217
-gray*color11: #ffea55
-gray*color4: #55aaff
-gray*color12: #1793d1
-gray*color5: #b217d1
-gray*color13: #d11793
-gray*color6: #93d1b2
-gray*color14: #17d1b2
-gray*color7: #eeeeee
-gray*color15: #ffffff
+! --- special colors ---
 
-brown*background:    #292929
-brown*foreground:    #ffffff
-brown*color0:    #404040
-brown*color8:    #505050
-brown*color1:    #CE5666
-brown*color9:    #952743
-brown*color2:    #80A673
-brown*color10:    #97D599
-brown*color3:    #E0BC93
-brown*color11:    #FFCAA2
-brown*color4:    #778BAF
-brown*color12:    #5A667F
-brown*color5:    #94738C
-brown*color13:    #D8ADCE
-brown*color6:    #B5D2DD
-brown*color14:    #82A9CC
-brown*color7:    #d2d2d2
-brown*color15:    #ffffff
+bit*background: #deebfa
+bit*foreground: #172333
 
-doomcide*background:  #333333
-doomcide*foreground:  #cccccc
-doomcide*color0:  #333333
-doomcide*color8:  #666666
-doomcide*color1:  #A94952
-doomcide*color9:  #ED6975
-doomcide*color2:  #83A949
-doomcide*color10: #B8ED69
-doomcide*color3:  #A99F49
-doomcide*color11: #EDE169
-doomcide*color4:  #4983A9
-doomcide*color12: #69B8ED
-doomcide*color5:  #A94983
-doomcide*color13: #ED69B8
-doomcide*color6:  #49A99F
-doomcide*color14: #69EDE1
-doomcide*color7:  #AAAAAA
-doomcide*color15: #cccccc
+! --- standard colors ---
+
+! black
+bit*color0: #172333
+
+! bright_black
+bit*color8: #273343
+
+! red
+bit*color1: #8c1515
+
+! bright_red
+bit*color9: #be1d1d
+
+! green
+bit*color2: #158c15
+
+! bright_green
+bit*color10: #1dbe1d
+
+! yellow
+bit*color3: #8c8c15
+
+! bright_yellow
+bit*color11: #bebe1d
+
+! blue
+bit*color4: #15158c
+
+! bright_blue
+bit*color12: #1d1dbe
+
+! magenta
+bit*color5: #8c158c
+
+! bright_magenta
+bit*color13: #be1dbe
+
+! cyan
+bit*color6: #158c8c
+
+! bright_cyan
+bit*color14: #1dbebe
+
+! white
+bit*color7: #b7c4d4
+
+! bright_white
+bit*color15: #deebfa
+
+
+! ------------------------------------------------------------------------------
+! --- end of terminal colors section -------------------------------------------
+! ------------------------------------------------------------------------------

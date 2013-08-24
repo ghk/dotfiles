@@ -1,5 +1,5 @@
 set guioptions+=n
-colorscheme solarized-dark
+"colorscheme solarized-dark
 set hintkeys=abcdefghijklmnopqrstuvwxyz
 
 hi -a Hint font-size: 10pt !important; 

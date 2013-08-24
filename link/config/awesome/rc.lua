@@ -15,6 +15,10 @@ require "keybinder"
 
 os.execute("fishd")
 
+naughty.config.presets.normal.icon_size = 50
+naughty.config.presets.low.icon_size = 50
+naughty.config.presets.critical.icon_size = 50
+
 local capi = { key = key }
 
 --{{---| functions |--------------------------------------------------------
@@ -599,6 +603,9 @@ globalkeys = awful.util.table.join(
                   awful.util.spawn(terminal) 
               end
           end),                
+    awful.key({ modkey, "Control"}, "Return",   function () 
+              awful.util.spawn("whiterxvt") 
+          end),                
     awful.key({ modkey },            "r",        function () awful.util.spawn_with_shell("gmrun") end),
     awful.key({ modkey },            "v",        function () awful.util.spawn_with_shell("gvim -geometry 92x58+710+24") end),    
     awful.key({ modkey },            "g",        function () awful.util.spawn_with_shell("gcolor2") end),
@@ -818,7 +825,7 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 --{{--| Autostart |--------------------------------------------------------
 
 run_once("compton")
-run_once("focused")
+--run_once("focused")
 run_once_differ("conky", 'conky -c "/home/ghk/.config/conky/conkyrc"')
 
 run_once_differ("nm-applet", "dbus-launch nm-applet --sm-disable")
@@ -830,7 +837,7 @@ run_once("udisks-glue")
 --run_once("kbdd")
 run_once("glipper")
 
-run_oncewa("dropbox start")
+--run_oncewa("dropbox start")
 
 --{{--|Gnome autostart
 

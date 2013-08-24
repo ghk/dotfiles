@@ -2,6 +2,7 @@ set fish_greeting
 set VIRTUAL_ENV_DISABLE_PROMPT 1
 set PATH /home/ghk/.local/bin /opt/vagrant/bin /usr/local/bin $PATH
 set TERM xterm-256color; 
+set WINEARCH win32
 
 if not status --is-interactive
     exit
@@ -11,6 +12,10 @@ end
 
 alias cl="command grc --colour=auto $ARGV"
 
+alias reboot="sudo reboot"
+alias poweroff="sudo poweroff"
+alias suspend="sudo pm-suspend"
+alias hibernate="sudo s2disk"
 alias ping="cl ping $ARGV"
 alias traceroute="cl traceroute $ARGV"
 alias guestdo="sudo -u guest $ARGV"
@@ -51,9 +56,11 @@ function vi_mode_user
     #stty -icrnl
 end
 
+
 function fish_user_key_bindings
+    #bind \cm 'commandline -f execute; commandline -f repaint;'
     vi_mode_insert
-    #stty -icrnl
+    ##stty -icrnl
 end
 
 #less color

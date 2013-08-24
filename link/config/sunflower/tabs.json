@@ -15,7 +15,7 @@
         "tabs": [
             {
                 "class": "ViFileList", 
-                "path": "/home/ghk", 
+                "path": "/home/ghk/Temp/live-fat-stick", 
                 "sort_ascending": true, 
                 "sort_column": 0
             }
